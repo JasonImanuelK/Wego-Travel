@@ -15,7 +15,7 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:src="@drawable/wegotravel"
+            android:src="@drawable/logo"
             android:layout_width="200dp"
             android:layout_height="200dp">
         </ImageView>
@@ -41,9 +41,11 @@
 
         <EditText
             android:id="@+id/email"
-            android:layout_height="40dp"
             android:layout_width="200dp"
-            android:inputType="textEmailAddress">
+            android:layout_height="48dp"
+            android:inputType="textEmailAddress"
+            tools:ignore="SpeakableTextPresentCheck">
+
         </EditText>
 
         <TextView
@@ -58,9 +60,9 @@
         <EditText
             android:id="@+id/password"
             android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:inputType="textPassword">
-        </EditText>
+            android:layout_height="48dp"
+            android:inputType="textPassword"
+            tools:ignore="SpeakableTextPresentCheck"></EditText>
 
         <TextView
             android:gravity="center"
@@ -82,31 +84,10 @@
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonRegister"
-            android:text="Register"
-            android:textColor="@android:color/white"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp"
-            app:cornerRadius="4dp"
-            />
+            android:layout_width="200dp"
+            android:layout_height="200dp">
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/buttonLogin"
-            android:text="Login"
-            android:textColor="@android:color/white"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp"
-            app:cornerRadius="4dp"
-            />
+        </info.hoang8f.widget.FButton>
 
     </LinearLayout>
 
