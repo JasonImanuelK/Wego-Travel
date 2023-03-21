@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/Background"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -19,7 +19,7 @@
             android:layout_width="200dp"
             android:layout_height="200dp">
         </ImageView>
-        
+
         <TextView
             android:gravity="center"
             android:id="@+id/Slogan"
@@ -80,33 +80,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-            <info.hoang8f.widget.FButton
-                android:id="@+id/buttonRegister"
-                android:text="Register"
-                android:textColor="@android:color/white"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:shadowColor="@android:color/black"
-                app:shadowEnabled="true"
-                app:shadowHeight="5dp"
-                app:cornerRadius="4dp"
-                />
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonRegister"
+            android:text="Register"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:shadowColor="@android:color/black"
+            app:shadowEnabled="true"
+            app:shadowHeight="5dp"
+            app:cornerRadius="4dp"
+            />
 
-            <info.hoang8f.widget.FButton
-                android:id="@+id/buttonLogin"
-                android:text="Login"
-                android:textColor="@android:color/white"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:shadowColor="@android:color/black"
-                app:shadowEnabled="true"
-                app:shadowHeight="5dp"
-                app:cornerRadius="4dp"
-                />
+        <info.hoang8f.widget.FButton
+            android:id="@+id/buttonLogin"
+            android:text="Login"
+            android:textColor="@android:color/white"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            app:shadowColor="@android:color/black"
+            app:shadowEnabled="true"
+            app:shadowHeight="5dp"
+            app:cornerRadius="4dp"
+            />
 
     </LinearLayout>
 
