@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Wego-Travel</string>
+    <string name="Slogan">Explore the World with Ease!</string>
+    <string name="labelEmail">Email</string>
+    <string name="labelPassword">Password</string>
+    <string name="labelLupaPassword">Lupa Password?</string>
 </resources>
