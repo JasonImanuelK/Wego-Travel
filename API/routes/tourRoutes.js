@@ -1,15 +1,23 @@
 const express = require('express');
+
 const tourControllers = require('./../controllers/tourControllers.js');
 
 const router = express.Router();
 
-router
-.route('/')
-.post(tourControllers.createTour)
-.get(tourControllers.getAllTours);
+router.get('/lihatKupon', (req, res) => {
+    const userId = req.body.id;
+    const tipeTiket = req.body.tipe_tiket
+    tourControllers.lihatKupon(userId, tipeTiket, (results) => {
+        res.send(results);
+    });
+});
 
-router
-.route('/satu/:id')
-.get(tourControllers.getTour);
+router.get('/users/:id', (req, res) => {
+    const userId = req.params.id;
+    tourControllers.getUserById(userId, (results) => {
+        res.send(results);
+    });
+});
 
 module.exports = router;
+
