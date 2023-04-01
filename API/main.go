@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	controllers "github.com/Wego-Travel/API/controllers"
+	//controllers "github.com/Wego-Travel/API/controllers"
 	"github.com/gorilla/mux"
 )
 
