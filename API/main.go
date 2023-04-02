@@ -13,6 +13,8 @@ func main() {
 	log.Println("RUNNING ...")
 	router := mux.NewRouter()
 
+	router.HandleFunc("/UpdateProfil/{id_pengguna}", controllers.PerbaruiProfil).Methods("PUT")
+
 	svrPort := controllers.LoadEnv("SVR_PORT")
 	log.Println("Connected to port " + svrPort)
 	addr := ":" + svrPort
