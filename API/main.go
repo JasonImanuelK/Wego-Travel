@@ -4,7 +4,7 @@ import (
 	"log"
 	"net/http"
 
-	controllers "github.com/Wego-Travel/API/controllers"
+	"github.com/Wego-Travel/API/controllers"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
@@ -19,6 +19,7 @@ func main() {
 	router.HandleFunc("/LupaPassword", controllers.LupaPassword).Methods("PUT")
 	router.HandleFunc("/UpdateProfil/{id_pengguna}", controllers.PerbaruiProfil).Methods("PUT")
 	router.HandleFunc("/LihatKupon", controllers.LihatKupon).Methods("GET")
+	router.HandleFunc("/PakaiKupon", controllers.PakaiKupon).Methods("PUT")
 
 	svrPort := controllers.LoadEnv("SVR_PORT")
 	log.Println("Connected to port " + svrPort)

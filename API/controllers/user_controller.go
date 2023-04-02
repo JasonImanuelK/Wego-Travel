@@ -115,17 +115,14 @@ func LupaPassword(w http.ResponseWriter, r *http.Request) {
 }
 
 func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
-	log.Print("Udah sampe sini")
 	db := Connect()
 	defer db.Close()
 
 	err := r.ParseForm()
-	var response model.MessageResponse
 	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
-		response.Status = 400
-		response.Message = "Bad Request aa"
-		json.NewEncoder(w).Encode(response)
+		log.Println("(ERROR)\t", err.Error())
+		SendErrorResponse(w, 400)
 		return
 	}
 
