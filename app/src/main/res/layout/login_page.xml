@@ -80,33 +80,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-            <info.hoang8f.widget.FButton
-                android:id="@+id/buttonRegister"
+            <Button
+                android:id="@+id/btn_register"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Register"
-                android:textColor="@android:color/white"
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:shadowColor="@android:color/black"
-                app:shadowEnabled="true"
-                app:shadowHeight="5dp"
-                app:cornerRadius="4dp"
-                />
+                android:textSize="12sp" />
 
-            <info.hoang8f.widget.FButton
-                android:id="@+id/buttonLogin"
-                android:text="Login"
-                android:textColor="@android:color/white"
-                android:layout_weight="1"
-                android:layout_width="0dp"
+            <Button
+                android:id="@+id/btn_login"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                app:shadowColor="@android:color/black"
-                app:shadowEnabled="true"
-                app:shadowHeight="5dp"
-                app:cornerRadius="4dp"
-                />
+                android:layout_weight="1"
+                android:text="Login"
+                android:textSize="12sp" />
 
     </LinearLayout>
 
