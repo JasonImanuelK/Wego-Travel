@@ -64,7 +64,7 @@ func Authenticate(next http.HandlerFunc, accessType int) http.HandlerFunc {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		isValidToken := ValidateUserToken(r, accessType)
 		if !isValidToken {
-			SendErrorResponse(w, 401)
+			//SendErrorResponse(w, 401)
 		} else {
 			next.ServeHTTP(w, r)
 		}

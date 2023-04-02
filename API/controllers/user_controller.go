@@ -8,9 +8,9 @@ import (
 
 	"github.com/Wego-Travel/API/model"
 	"github.com/gorilla/mux"
+	"github.com/joho/godotenv"
 
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/joho/godotenv"
 )
 
 func LupaPassword(w http.ResponseWriter, r *http.Request) {
@@ -42,6 +42,7 @@ func LupaPassword(w http.ResponseWriter, r *http.Request) {
 }
 
 func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
+	log.Print("Udah sampe sini")
 	db := Connect()
 	defer db.Close()
 
@@ -50,7 +51,7 @@ func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
 		response.Status = 400
-		response.Message = "Bad Request"
+		response.Message = "Bad Request aa"
 		json.NewEncoder(w).Encode(response)
 		return
 	}
@@ -68,28 +69,27 @@ func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
 	query := "UPDATE pengguna SET "
 
 	if nama != "" {
-		query = query + "nama = " + nama + ", "
+		query = query + "nama = '" + nama + "', "
 	}
 	if tanggalLahir != "" {
-		query += "tanggal_lahir = " + tanggalLahir + ", "
+		query += "tanggal_lahir = '" + tanggalLahir + "', "
 	}
 	if alamat != "" {
-		query += "alamat = " + alamat + ", "
+		query += "alamat = '" + alamat + "', "
 	}
 	if jenisKelamin != "" {
-		query += "jenis_kelamin = " + jenisKelamin + ", "
+		query += "jenis_kelamin = '" + jenisKelamin + "', "
 	}
 	if email != "" {
-		query += "email = " + email + ", "
+		query += "email = '" + email + "', "
 	}
 	if nomorTelepon != "" {
-		query += "nomor_telepon = " + nomorTelepon + ", "
+		query += "nomor_telepon = '" + nomorTelepon + "', "
 	}
 	query = query[:len(query)-2]
 	query += " WHERE id_pengguna = " + idPengguna
 
 	_, errQuery := db.Query(query)
-
 	if errQuery == nil {
 		response.Status = 200
 		response.Message = "Success"
@@ -102,11 +102,9 @@ func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
 }
 
 func LoadEnv(input string) string {
-	err := godotenv.Load(".env.sample")
+	err := godotenv.Load("API/catatan.env")
 	if err != nil {
-		log.Fatal("File envnya ga ada")
-		return ""
+		log.Fatalf(err.Error())
 	}
-	hasilENV := os.Getenv(input)
-	return hasilENV
+	return os.Getenv(input)
 }
