@@ -96,12 +96,10 @@ func LupaPassword(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	err := r.ParseForm()
-	var response model.MessageResponse
 	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
-		response.Status = 400
-		response.Message = "Bad Request"
-		json.NewEncoder(w).Encode(response)
+		log.Println("(ERROR)\t", err.Error())
+		SendErrorResponse(w, 400)
 		return
 	}
 	password := r.Form.Get("password")
@@ -111,7 +109,7 @@ func LupaPassword(w http.ResponseWriter, r *http.Request) {
 	if errQuery == nil {
 		SendSuccessResponse(w)
 	} else {
-		log.Println("(ERROR)\t", errQuery)
+		log.Println("(ERROR)\t", errQuery.Error())
 		SendErrorResponse(w, 400)
 	}
 }
