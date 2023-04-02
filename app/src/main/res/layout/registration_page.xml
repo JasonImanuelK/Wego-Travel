@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@drawable/backgroundapp"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -15,98 +15,106 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:src="@drawable/WeGoTravel"
-            android:layout_width="200dp"
-            android:layout_height="200dp">
+            android:src="@drawable/wegotravellogo"
+            android:layout_gravity="center"
+            android:layout_width="100dp"
+            android:layout_height="100dp">
         </ImageView>
 
         <TextView
-            android:gravity="center"
-            android:id="@+id/Slogan"
-            android:text="@string/Slogan"
-            android:textColor="@android:color/holo_blue_light"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </TextView>
-
-        <TextView
-            android:gravity="left"
-            android:layout_marginTop="50dp"
             android:id="@+id/labelEmail"
-            android:text="@string/labelEmail"
-            android:textColor="@android:color/holo_blue_light"
             android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/labelEmail"
+            android:textColor="@android:color/holo_blue_light"></TextView>
 
         <EditText
             android:id="@+id/email"
-            android:layout_height="40dp"
             android:layout_width="200dp"
-            android:inputType="textEmailAddress">
-        </EditText>
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"></EditText>
 
         <TextView
-            android:gravity="left"
-            android:id="@+id/labelPassword"
-            android:text="@string/labelPassword"
-            android:textColor="@android:color/holo_blue_light"
+            android:id="@+id/labelAlamat"
             android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/labelalamat"
+            android:textColor="@android:color/holo_blue_light"></TextView>
+
+        <EditText
+            android:id="@+id/Alamat"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"></EditText>
+
+        <TextView
+            android:id="@+id/labelNomorTelepon"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/labelnotelepon"
+            android:textColor="@android:color/holo_blue_light"></TextView>
+
+        <EditText
+            android:id="@+id/NoTelepon"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"></EditText>
+
+        <TextView
+            android:id="@+id/labelTanggalLahir"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/labeltanggallahir"
+            android:textColor="@android:color/holo_blue_light"></TextView>
+
+        <EditText
+            android:id="@+id/TanggalLahir"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"></EditText>
+
+        <TextView
+            android:id="@+id/labelPassword"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/labelPassword"
+            android:textColor="@android:color/holo_blue_light"></TextView>
 
         <EditText
             android:id="@+id/password"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:inputType="textPassword">
-        </EditText>
+            android:inputType="textPassword"></EditText>
 
         <TextView
-            android:gravity="center"
-            android:id="@+id/labelLupaPassword"
-            android:text="@string/labelLupaPassword"
+            android:id="@+id/labelReTypePassword"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_blue_dark">
-        </TextView>
+            android:gravity="left"
+            android:text="@string/labelretypepassword"
+            android:textColor="@android:color/holo_blue_light"></TextView>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_alignParentBottom="true"
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/ReTypePassword"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:inputType="textPassword"></EditText>
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonRegister"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
             android:text="Register"
-            android:textColor="@android:color/white"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp"
-            app:cornerRadius="4dp"
-            />
+            android:textColor="@android:color/white" />
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/buttonLogin"
-            android:text="Login"
-            android:textColor="@android:color/white"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="8dp"
-            app:shadowColor="@android:color/black"
-            app:shadowEnabled="true"
-            app:shadowHeight="5dp"
-            app:cornerRadius="4dp"
-            />
 
     </LinearLayout>
 
