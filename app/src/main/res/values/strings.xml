@@ -4,4 +4,9 @@
     <string name="labelEmail">Email</string>
     <string name="labelPassword">Password</string>
     <string name="labelLupaPassword">Lupa Password?</string>
+    <string name="labelnama">Nama</string>
+    <string name="labelalamat">Alamat</string>
+    <string name="labelnotelepon">Nomor telepon</string>
+    <string name="labeltanggallahir">Tanggal Lahir</string>
+    <string name="labelretypepassword">Re-Type Password</string>
 </resources>
