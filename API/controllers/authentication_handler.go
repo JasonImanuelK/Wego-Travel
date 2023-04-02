@@ -20,14 +20,13 @@ type Claims struct {
 	jwt.StandardClaims
 }
 
-func GenerateToken(w http.ResponseWriter, id int, username string, userType int) {
+func GenerateToken(w http.ResponseWriter, id int, username string) {
 	tokenExpiryTime := time.Now().Add(60 * time.Minute)
 
 	// create claims with user data
 	claims := &Claims{
 		ID:       id,
 		Username: username,
-		UserType: userType,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: tokenExpiryTime.Unix(),
 		},
