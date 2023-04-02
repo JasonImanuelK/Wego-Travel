@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"encoding/json"
-	"fmt"
+	"log"
 	"net/http"
 	"os"
 
@@ -39,7 +39,6 @@ func LupaPassword(w http.ResponseWriter, r *http.Request) {
 		response.Message = "Bad Request"
 		json.NewEncoder(w).Encode(response)
 	}
-
 }
 
 func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
@@ -100,13 +99,12 @@ func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
 		response.Message = "Bad Request"
 		json.NewEncoder(w).Encode(response)
 	}
-
 }
 
 func LoadEnv(input string) string {
 	err := godotenv.Load(".env.sample")
 	if err != nil {
-		fmt.Print("File envnya ga ada")
+		log.Fatal("File envnya ga ada")
 		return ""
 	}
 	hasilENV := os.Getenv(input)
