@@ -16,7 +16,9 @@ func main() {
 	router.HandleFunc("/Login", controllers.Login).Methods("POST")
 	router.HandleFunc("/Logout", controllers.Logout).Methods("GET")
 	router.HandleFunc("/Register", controllers.Register).Methods("POST")
+	router.HandleFunc("/LupaPassword", controllers.LupaPassword).Methods("PUT")
 	router.HandleFunc("/UpdateProfil/{id_pengguna}", controllers.PerbaruiProfil).Methods("PUT")
+	router.HandleFunc("/LihatKupon", controllers.LihatKupon).Methods("GET")
 
 	svrPort := controllers.LoadEnv("SVR_PORT")
 	log.Println("Connected to port " + svrPort)
