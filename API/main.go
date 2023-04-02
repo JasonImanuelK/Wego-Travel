@@ -13,6 +13,9 @@ func main() {
 	log.Println("RUNNING ...")
 	router := mux.NewRouter()
 
+	router.HandleFunc("/Login", controllers.Login).Methods("POST")
+	router.HandleFunc("/Logout", controllers.Logout).Methods("GET")
+	router.HandleFunc("/Register", controllers.Register).Methods("POST")
 	router.HandleFunc("/UpdateProfil/{id_pengguna}", controllers.PerbaruiProfil).Methods("PUT")
 
 	svrPort := controllers.LoadEnv("SVR_PORT")
