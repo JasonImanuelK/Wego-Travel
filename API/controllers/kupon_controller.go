@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/Wego-Travel/API/model"
+	"github.com/gorilla/mux"
 )
 
 func LihatKupon(w http.ResponseWriter, r *http.Request) {
@@ -33,4 +34,21 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(vouchersResponse)
+}
+
+func PakaiKupon(w http.ResponseWriter, r *http.Request) {
+	db := Connect()
+	defer db.Close()
+
+	param := mux.Vars(r)
+	id_voucher := param["id_voucher"]
+
+	_, errQuery := db.Exec("UPDATE voucher SET status_penggunaan = 'Tidak Berlaku' WHERE id_voucher = ?", id_voucher)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
 }
