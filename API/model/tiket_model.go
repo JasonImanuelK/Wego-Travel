@@ -14,3 +14,16 @@ type TiketPesawatResponse struct {
 	Message string         `json:"message"`
 	Data    []TiketPesawat `json:"data"`
 }
+
+type TiketHotel struct {
+	Id_tiket_hotel    int       `json:"id_tiket_hotel"`
+	Tanggal_pemesanan time.Time `json:"tanggal_pemesanan"`
+	Status_pemesanan  string    `json:"status_pemesanan"`
+	Id_voucher        int       `json:"id_voucher"`
+}
+
+type TiketHotelResponse struct {
+	Status  int          `json:"status"`
+	Message string       `json:"message"`
+	Data    []TiketHotel `json:"data"`
+}
