@@ -26,15 +26,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 
 	// Encrypt password
-	hasher := md5.New()
-	hasher.Write([]byte(password))
-	encryptedPassword := hex.EncodeToString(hasher.Sum(nil))
+	// hasher := md5.New()
+	// hasher.Write([]byte(password))
+	// encryptedPassword := hex.EncodeToString(hasher.Sum(nil))
 
 	// User / admin login
-	row := db.QueryRow("SELECT id_pengguna, nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat FROM pengguna WHERE email=? AND password=?", email, encryptedPassword)
+	row := db.QueryRow("SELECT id_pengguna, nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat FROM pengguna WHERE email=? AND password=?", email, password)
 	var user model.Pengguna
 	if err := row.Scan(&user.Id_pengguna, &user.Nama, &user.Email, &user.Password, &user.Jenis_kelamin, &user.Tanggal_lahir, user.Nomor_telepon, user.Alamat); err != nil {
 		log.Println("(ERROR)\t", err)
+		log.Print("masuk sini")
 		SendErrorResponse(w, 400)
 		return
 	}
@@ -80,7 +81,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	encryptedPassword := hex.EncodeToString(hasher.Sum(nil))
 
 	// Query
-	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, address, user_type) values (?,?,?,?,?,1)", nama, email, encryptedPassword, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat)
+	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat) values (?,?,?,?,?,?,?)", nama, email, encryptedPassword, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat)
 
 	if errQuery == nil {
 		log.Println("(SUCCESS)\t", "Add new user request")
