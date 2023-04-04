@@ -44,7 +44,37 @@ func LihatListHotel(w http.ResponseWriter, r *http.Request) {
 }
 
 func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
-	
+	db := Connect()
+	defer db.Close()
+
+	query := "SELECT nomor_kamar, tipe_kamar, harga_kamar, status_kamar, id_hotel FROM kamar_hotel;"
+	rows, err := db.Query(query)
+	if err != nil {
+		log.Println("(ERROR)\t", err)
+		SendErrorResponse(w, 500)
+		return
+	}
+
+	var kamarHotel model.KamarHotel
+	var list_kamarHotel []model.KamarHotel
+
+	for rows.Next() {
+		if err := rows.Scan(&kamarHotel.nomor_kamar, &kamarHotel.tipe_kamar, &kamarHotel.harga_kamar, &kamarHotel.status_kamar, &kamarHotel.id_hotel); err != nil {
+			fmt.Println(err.Error())
+		} else {
+			list_kamarHotel = append(list_kamarHotel, kamarHotel)
+		}
+	}
+
+	var kamarHotelResponse model.KamarHotelResponse
+	if err == nil {
+		kamarHotelResponse.Status = 200
+		kamarHotelResponse.Message = "Success"
+		kamarHotelResponse.Data = list_kamarHotel
+	} else {
+		log.Println("(ERROR)\t", err)
+		SendErrorResponse(w, 400)
+	}
 }
 
 func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {

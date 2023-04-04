@@ -44,7 +44,37 @@ func LihatListPesawat(w http.ResponseWriter, r *http.Request) {
 }
 
 func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
-	
+	db := Connect()
+	defer db.Close()
+
+	query := "SELECT nomor_kursi, tipe_kursi, harga_kursi, status_kursi, id_pesawat FROM kursi_pesawat;"
+	rows, err := db.Query(query)
+	if err != nil {
+		log.Println("(ERROR)\t", err)
+		SendErrorResponse(w, 500)
+		return
+	}
+
+	var kursiPesawat model.KursiPesawat
+	var list_kursiPesawat []model.KursiPesawat
+
+	for rows.Next() {
+		if err := rows.Scan(&kursiPesawat.nomor_kursi, &kursiPesawat.tipe_kursi, &kursiPesawat.harga_kursi, &kursiPesawat.status_kursi, &kursiPesawat.id_pesawat); err != nil {
+			fmt.Println(err.Error())
+		} else {
+			list_kursiPesawat = append(list_kursiPesawat, kursiPesawat)
+		}
+	}
+
+	var kursiPesawatResponse model.KursiPesawatResponse
+	if err == nil {
+		kursiPesawatResponse.Status = 200
+		kursiPesawatResponse.Message = "Success"
+		kursiPesawatResponse.Data = list_kursiPesawat
+	} else {
+		log.Println("(ERROR)\t", err)
+		SendErrorResponse(w, 400)
+	}
 }
 
 func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
