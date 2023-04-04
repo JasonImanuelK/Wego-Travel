@@ -24,8 +24,8 @@ func MelihatHistoryPesawat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var tiket_pesawat model.TiketPesawat
-	var list_tiket_pesawat []model.TiketPesawat
+	var tiket_pesawat model.HistoryPesawat
+	var list_tiket_pesawat []model.HistoryPesawat
 
 	for rows.Next() {
 		if err := rows.Scan(&tiket_pesawat.Id_tiket_pesawat, &tiket_pesawat.Tanggal_pemesanan, &tiket_pesawat.Status_pemesanan, &tiket_pesawat.Id_voucher); err != nil {
@@ -35,7 +35,7 @@ func MelihatHistoryPesawat(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var tiketPesawatResponse model.TiketPesawatResponse
+	var tiketPesawatResponse model.HistoryPesawatResponse
 	if err == nil {
 		tiketPesawatResponse.Status = 200
 		tiketPesawatResponse.Message = "Success"
@@ -61,8 +61,8 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var tiket_hotel model.TiketHotel
-	var list_tiket_hotel []model.TiketHotel
+	var tiket_hotel model.HistoryHotel
+	var list_tiket_hotel []model.HistoryHotel
 
 	for rows.Next() {
 		if err := rows.Scan(&tiket_hotel.Id_tiket_hotel, &tiket_hotel.Tanggal_pemesanan, &tiket_hotel.Status_pemesanan, &tiket_hotel.Id_voucher); err != nil {
@@ -72,7 +72,7 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	var tiketHotelResponse model.TiketHotelResponse
+	var tiketHotelResponse model.HistoryHotelResponse
 	if err == nil {
 		tiketHotelResponse.Status = 200
 		tiketHotelResponse.Message = "Success"
