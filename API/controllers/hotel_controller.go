@@ -78,5 +78,29 @@ func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {
-	
+
+}
+
+func BatalPesanHotel(w http.ResponseWriter, r *http.Request) {
+	db := Connect()
+	defer db.Close()
+
+	err := r.ParseForm()
+	if err != nil {
+		log.Println("(ERROR)\t", err.Error())
+		SendErrorResponse(w, 400)
+		return
+	}
+
+	param := mux.Vars(r)
+	id_tiket_hotel := param["id_tiket_hotel"]
+
+	_, errQuery := db.Exec("UPDATE tiket_hotel th INNER JOIN kamar_hotel kh ON th.id_tiket_hotel = kh.id_tiket_hotel SET th.status_pemesanan = 'Dikembalikan' AND kh.status_kamar = 'Kosong' WHERE th.id_tiket_hotel = ?", id_tiket_hotel)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
 }
