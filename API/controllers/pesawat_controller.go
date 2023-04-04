@@ -83,7 +83,6 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	param := mux.Vars(r)
-	id_pesawat := param["id_pesawat"]
 	nomor_kursi := param["nomor_kursi"]
 	id_pengguna := param["id_pengguna"]
 	id_voucher := param["id_voucher"]
@@ -103,7 +102,7 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 		SendErrorResponse(w, 400)
 	}
 
-	_, errQuery := db.Exec("UPDATE kursi_pesawat SET id_tiket_pesawat = ? WHERE nomor_kursi = ?", 999, nomor_kursi)
+	_, errQuery := db.Exec("UPDATE kursi_pesawat SET status_kursi = ?, id_tiket_pesawat = ? WHERE nomor_kursi = ?", "Terisi", 999, nomor_kursi)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
