@@ -78,5 +78,29 @@ func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
-	
+
+}
+
+func BatalPesanPesawat(w http.ResponseWriter, r *http.Request) {
+	db := Connect()
+	defer db.Close()
+
+	err := r.ParseForm()
+	if err != nil {
+		log.Println("(ERROR)\t", err.Error())
+		SendErrorResponse(w, 400)
+		return
+	}
+
+	param := mux.Vars(r)
+	id_tiket_pesawat := param["id_tiket_pesawat"]
+
+	_, errQuery := db.Exec("UPDATE tiket_pesawat tp INNER JOIN kursi_pesawat kp ON tp.id_tiket_pesawat = kp.id_tiket_pesawat SET tp.status_pemesanan = 'Dikembalikan' AND kp.status_kamar = 'Kosong' WHERE th.id_tiket_pesawat = ?", id_tiket_pesawat)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
 }

@@ -97,7 +97,6 @@ func LupaPassword(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	err := r.ParseForm()
-	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
 		log.Println("(ERROR)\t", err.Error())
 		SendErrorResponse(w, 400)
@@ -120,7 +119,6 @@ func PerbaruiProfil(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	err := r.ParseForm()
-	w.Header().Set("Content-Type", "application/json")
 	if err != nil {
 		log.Println("(ERROR)\t", err.Error())
 		SendErrorResponse(w, 400)
