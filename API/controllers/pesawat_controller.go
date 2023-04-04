@@ -3,6 +3,7 @@ package controllers
 import (
 	"fmt"
 	"log"
+	"time"
 	"net/http"
 
 	"github.com/Wego-Travel/API/model"
@@ -78,5 +79,36 @@ func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
-	
+	db := Connect()
+	defer db.Close()
+
+	param := mux.Vars(r)
+	id_pesawat := param["id_pesawat"]
+	nomor_kursi := param["nomor_kursi"]
+	id_pengguna := param["id_pengguna"]
+	id_voucher := param["id_voucher"]
+	nama_depan := param["nama_depan"]
+	nama_belakang := param["nama_belakang"]
+	jenis_kelamin := param["jenis_kelamin"]
+	tanggal_lahir := param["tanggal_lahir"]
+	email := param["email"]
+	nomor_telepon := param["nomor_telepon"]
+
+	_, errQuery := db.Exec("INSERT INTO `tiket_pesawat` (`tanggal_pemesanan`, `id_pengguna`, `id_voucher`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `tanggal_lahir`, `email`, `nomor_telepon`) VALUES (?, ?, ? ?, ?, ?, ?, ?, ?)", time.Now, id_pengguna, id_voucher, nama_depan, nama_belakang, jenis_kelamin, tanggal_lahir, email, nomor_telepon)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery := db.Exec("UPDATE kursi_pesawat SET id_tiket_pesawat = ? WHERE nomor_kursi = ?", 999, nomor_kursi)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
 }
