@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
+
+	"crypto/sha1"
+	"encoding/base64"
 
 	"github.com/Wego-Travel/API/model"
 	"github.com/gorilla/mux"
@@ -78,7 +82,40 @@ func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {
+	db := Connect()
+	defer db.Close()
 
+	nomor_kamar := r.Form.Get("nomor_kamar")
+	id_pengguna := r.Form.Get("id_pengguna")
+	id_voucher := r.Form.Get("id_voucher")
+	nama_penginap := r.Form.Get("nama_penginap")
+	jenis_kelamin := r.Form.Get("jenis_kelamin")
+	tanggal_lahir := r.Form.Get("tanggal_lahir")
+	tanggal_inap := r.Form.Get("tanggal_inap")
+	lama_inap := r.Form.Get("lama_inap")
+
+	texthash := nomor_kamar + id_pengguna + id_voucher + nama_penginap + jenis_kelamin + tanggal_lahir + tanggal_inap + lama_inap
+	hasher := sha1.New()
+	hasher.Write([]byte(texthash))
+	sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+
+	_, errQuery := db.Exec("INSERT INTO `tiket_hotel` (`id_tiket_hotel`, `tanggal_pemesanan`, `id_pengguna`, `id_voucher`, `nama_penginap`, `jenis_kelamin`, `tanggal_lahir`, `tanggal_inap`, `lama_inap`) VALUES (?, ?, ?, ? ?, ?, ?, ?, ?)", sha, time.Now, id_pengguna, id_voucher, nama_penginap, jenis_kelamin, tanggal_lahir, tanggal_inap, lama_inap)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery2 := db.Exec("UPDATE kamar_hotel SET status_kamar = ?, id_tiket_hotel = ? WHERE nomor_kamar = ?", "Terisi", sha, nomor_kamar)
+
+	if errQuery2 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
 }
 
 func BatalPesanHotel(w http.ResponseWriter, r *http.Request) {

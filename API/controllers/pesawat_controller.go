@@ -4,6 +4,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"time"
+
+	"crypto/sha1"
+	"encoding/base64"
 
 	"github.com/Wego-Travel/API/model"
 	"github.com/gorilla/mux"
@@ -78,7 +82,41 @@ func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
 }
 
 func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
+	db := Connect()
+	defer db.Close()
 
+	nomor_kursi := r.Form.Get("nomor_kursi")
+	id_pengguna := r.Form.Get("id_pengguna")
+	id_voucher := r.Form.Get("id_voucher")
+	nama_depan := r.Form.Get("nama_depan")
+	nama_belakang := r.Form.Get("nama_belakang")
+	jenis_kelamin := r.Form.Get("jenis_kelamin")
+	tanggal_lahir := r.Form.Get("tanggal_lahir")
+	email := r.Form.Get("email")
+	nomor_telepon := r.Form.Get("nomor_telepon")
+
+	texthash := nomor_kursi + id_pengguna + id_voucher + nama_depan + nama_belakang + jenis_kelamin + tanggal_lahir + email + nomor_telepon
+	hasher := sha1.New()
+	hasher.Write([]byte(texthash))
+	sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+
+	_, errQuery := db.Exec("INSERT INTO `tiket_pesawat` (`id_tiket_pesawat`, `tanggal_pemesanan`, `id_pengguna`, `id_voucher`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `tanggal_lahir`, `email`, `nomor_telepon`) VALUES (?, ?, ?, ? ?, ?, ?, ?, ?, ?)", sha, time.Now, id_pengguna, id_voucher, nama_depan, nama_belakang, jenis_kelamin, tanggal_lahir, email, nomor_telepon)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery2 := db.Exec("UPDATE kursi_pesawat SET status_kursi = ?, id_tiket_pesawat = ? WHERE nomor_kursi = ?", "Terisi", sha, nomor_kursi)
+
+	if errQuery2 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
 }
 
 func BatalPesanPesawat(w http.ResponseWriter, r *http.Request) {
