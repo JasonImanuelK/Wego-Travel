@@ -29,7 +29,7 @@ func LihatListHotel(w http.ResponseWriter, r *http.Request) {
 	var list_hotel []model.Hotel
 
 	for rows.Next() {
-		if err := rows.Scan(&hotel.Id_hotel, &hotel.nama_hotel, &hotel.alamat_hotel, &hotel.deskripsi, &hotel.rating, &hotel.promo); err != nil {
+		if err := rows.Scan(&hotel.Id_hotel, &hotel.Nama_hotel, &hotel.Alamat_hotel, &hotel.Deskripsi, &hotel.Rating, &hotel.Promo); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_hotel = append(list_hotel, hotel)
@@ -63,7 +63,7 @@ func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
 	var list_kamarHotel []model.KamarHotel
 
 	for rows.Next() {
-		if err := rows.Scan(&kamarHotel.nomor_kamar, &kamarHotel.tipe_kamar, &kamarHotel.harga_kamar, &kamarHotel.status_kamar, &kamarHotel.id_hotel); err != nil {
+		if err := rows.Scan(&kamarHotel.Nomor_kamar, &kamarHotel.Tipe_kamar, &kamarHotel.Harga_kamar, &kamarHotel.Status_kamar, &kamarHotel.Id_hotel); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_kamarHotel = append(list_kamarHotel, kamarHotel)
@@ -121,13 +121,6 @@ func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {
 func BatalPesanHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
-
-	err := r.ParseForm()
-	if err != nil {
-		log.Println("(ERROR)\t", err.Error())
-		SendErrorResponse(w, 400)
-		return
-	}
 
 	param := mux.Vars(r)
 	id_tiket_hotel := param["id_tiket_hotel"]

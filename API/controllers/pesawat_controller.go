@@ -29,7 +29,7 @@ func LihatListPesawat(w http.ResponseWriter, r *http.Request) {
 	var list_pesawat []model.Pesawat
 
 	for rows.Next() {
-		if err := rows.Scan(&pesawat.Id_pesawat, &pesawat.maskapai, &pesawat.tempat_berangkat, &pesawat.tujuan_berangkat, &pesawat.tanggal_berangkat, &pesawat.jam_berangkat, &pesawat.promo); err != nil {
+		if err := rows.Scan(&pesawat.Id_pesawat, &pesawat.Maskapai, &pesawat.Tempat_berangkat, &pesawat.Tujuan_berangkat, &pesawat.Tanggal_berangkat, &pesawat.Jam_berangkat, &pesawat.Promo); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_pesawat = append(list_pesawat, pesawat)
@@ -63,7 +63,7 @@ func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	var list_kursiPesawat []model.KursiPesawat
 
 	for rows.Next() {
-		if err := rows.Scan(&kursiPesawat.nomor_kursi, &kursiPesawat.tipe_kursi, &kursiPesawat.harga_kursi, &kursiPesawat.status_kursi, &kursiPesawat.id_pesawat); err != nil {
+		if err := rows.Scan(&kursiPesawat.Nomor_kursi, &kursiPesawat.Tipe_kursi, &kursiPesawat.Harga_kursi, &kursiPesawat.Status_kursi, &kursiPesawat.Id_pesawat); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_kursiPesawat = append(list_kursiPesawat, kursiPesawat)
@@ -122,13 +122,6 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 func BatalPesanPesawat(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
-
-	err := r.ParseForm()
-	if err != nil {
-		log.Println("(ERROR)\t", err.Error())
-		SendErrorResponse(w, 400)
-		return
-	}
 
 	param := mux.Vars(r)
 	id_tiket_pesawat := param["id_tiket_pesawat"]
