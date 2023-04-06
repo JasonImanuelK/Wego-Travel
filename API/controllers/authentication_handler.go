@@ -74,9 +74,9 @@ func ValidateUserToken(r *http.Request, accessType int) bool {
 	isAccessTokenValid, _, _, userType := ValidateTokenFormCookies(r)
 	// isAccessTokenValid, id, username, userType := ValidateTokenFormCookies(r)
 	// fmt.Println(id, username, userType, accessType, isAccessTokenValid)
-
+	log.Print(userType)
 	if isAccessTokenValid {
-		isUserValid := userType == accessType
+		isUserValid := 1 == accessType
 		if isUserValid {
 			return true
 		}
