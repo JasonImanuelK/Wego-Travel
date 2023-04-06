@@ -4,9 +4,11 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/Wego-Travel/API/model"
 	"github.com/gorilla/mux"
@@ -32,8 +34,9 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// User / admin login
 	row := db.QueryRow("SELECT id_pengguna, nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat FROM pengguna WHERE email=? AND password=?", email, password)
+	log.Print(row)
 	var user model.Pengguna
-	if err := row.Scan(&user.Id_pengguna, &user.Nama, &user.Email, &user.Password, &user.Jenis_kelamin, &user.Tanggal_lahir, user.Nomor_telepon, user.Alamat); err != nil {
+	if err := row.Scan(&user.Id_pengguna, &user.Nama, &user.Email, &user.Password, &user.Jenis_kelamin, &user.Tanggal_lahir, &user.Nomor_telepon, &user.Alamat); err != nil {
 		log.Println("(ERROR)\t", err)
 		log.Print("masuk sini")
 		SendErrorResponse(w, 400)
@@ -79,8 +82,15 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	hasher.Write([]byte(password))
 	encryptedPassword := hex.EncodeToString(hasher.Sum(nil))
 
+	//convert string time to date format
+	date, error := time.Parse("2006-01-02", tanggal_lahir)
+	if error != nil {
+		fmt.Println(error)
+		return
+	}
+
 	// Query
-	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat) values (?,?,?,?,?,?,?)", nama, email, encryptedPassword, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat)
+	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat) values (?,?,?,?,?,?,?)", nama, email, encryptedPassword, jenis_kelamin, date, nomor_telepon, alamat)
 
 	if errQuery == nil {
 		log.Println("(SUCCESS)\t", "Add new user request")
