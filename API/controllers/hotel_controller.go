@@ -51,8 +51,10 @@ func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	query := "SELECT nomor_kamar, tipe_kamar, harga_kamar, status_kamar, id_hotel FROM kamar_hotel;"
-	rows, err := db.Query(query)
+	param := mux.Vars(r)
+	id_hotel := param["id_hotel"]
+
+	rows, err := db.Query("SELECT nomor_kamar, tipe_kamar, harga_kamar, status_kamar, id_hotel FROM kamar_hotel WHERE id_hotel=?;", id_hotel)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 500)
