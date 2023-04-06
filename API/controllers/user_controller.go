@@ -54,7 +54,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
-
 	ResetUserToken(w)
 	SendSuccessResponse(w)
 	log.Println("(SUCCESS)\t", "Logout request")
