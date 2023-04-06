@@ -8,6 +8,7 @@ import (
 
 	"crypto/sha1"
 	"encoding/base64"
+	"encoding/json"
 
 	"github.com/Wego-Travel/API/model"
 	"github.com/gorilla/mux"
@@ -29,7 +30,7 @@ func LihatListPesawat(w http.ResponseWriter, r *http.Request) {
 	var list_pesawat []model.Pesawat
 
 	for rows.Next() {
-		if err := rows.Scan(&pesawat.Id_pesawat, &pesawat.maskapai, &pesawat.tempat_berangkat, &pesawat.tujuan_berangkat, &pesawat.tanggal_berangkat, &pesawat.jam_berangkat, &pesawat.promo); err != nil {
+		if err := rows.Scan(&pesawat.Id_pesawat, &pesawat.Maskapai, &pesawat.Tempat_berangkat, &pesawat.Tujuan_berangkat, &pesawat.Tanggal_berangkat, &pesawat.Jam_berangkat, &pesawat.Promo); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_pesawat = append(list_pesawat, pesawat)
@@ -41,6 +42,9 @@ func LihatListPesawat(w http.ResponseWriter, r *http.Request) {
 		pesawatResponse.Status = 200
 		pesawatResponse.Message = "Success"
 		pesawatResponse.Data = list_pesawat
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(pesawatResponse)
 	} else {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 400)
@@ -65,7 +69,7 @@ func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	var list_kursiPesawat []model.KursiPesawat
 
 	for rows.Next() {
-		if err := rows.Scan(&kursiPesawat.nomor_kursi, &kursiPesawat.tipe_kursi, &kursiPesawat.harga_kursi, &kursiPesawat.status_kursi, &kursiPesawat.id_pesawat); err != nil {
+		if err := rows.Scan(&kursiPesawat.Nomor_kursi, &kursiPesawat.Tipe_kursi, &kursiPesawat.Harga_kursi, &kursiPesawat.Status_kursi, &kursiPesawat.Id_pesawat); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_kursiPesawat = append(list_kursiPesawat, kursiPesawat)
@@ -77,6 +81,9 @@ func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
 		kursiPesawatResponse.Status = 200
 		kursiPesawatResponse.Message = "Success"
 		kursiPesawatResponse.Data = list_kursiPesawat
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(kursiPesawatResponse)
 	} else {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 400)
@@ -87,22 +94,28 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	nomor_kursi := r.Form.Get("nomor_kursi")
-	id_pengguna := r.Form.Get("id_pengguna")
-	id_voucher := r.Form.Get("id_voucher")
-	nama_depan := r.Form.Get("nama_depan")
-	nama_belakang := r.Form.Get("nama_belakang")
-	jenis_kelamin := r.Form.Get("jenis_kelamin")
-	tanggal_lahir := r.Form.Get("tanggal_lahir")
-	email := r.Form.Get("email")
-	nomor_telepon := r.Form.Get("nomor_telepon")
+	nomor_kursi := r.FormValue("nomor_kursi")
+	id_pengguna := r.FormValue("id_pengguna")
+	id_voucher := r.FormValue("id_voucher")
+	nama_depan := r.FormValue("nama_depan")
+	nama_belakang := r.FormValue("nama_belakang")
+	jenis_kelamin := r.FormValue("jenis_kelamin")
+	tanggal_lahir := r.FormValue("tanggal_lahir")
+	email := r.FormValue("email")
+	nomor_telepon := r.FormValue("nomor_telepon")
 
-	texthash := nomor_kursi + id_pengguna + id_voucher + nama_depan + nama_belakang + jenis_kelamin + tanggal_lahir + email + nomor_telepon
+	c_tanggal_lahir, err := time.Parse("2006-01-02", tanggal_lahir)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	texthash := nomor_kursi + id_pengguna + id_voucher + nama_depan + nama_belakang + jenis_kelamin + tanggal_lahir + email + nomor_telepon + time.Now().Format("yyyyMMddHHmmss")
 	hasher := sha1.New()
 	hasher.Write([]byte(texthash))
 	sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
 
-	_, errQuery := db.Exec("INSERT INTO `tiket_pesawat` (`id_tiket_pesawat`, `tanggal_pemesanan`, `id_pengguna`, `id_voucher`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `tanggal_lahir`, `email`, `nomor_telepon`) VALUES (?, ?, ?, ? ?, ?, ?, ?, ?, ?)", sha, time.Now, id_pengguna, id_voucher, nama_depan, nama_belakang, jenis_kelamin, tanggal_lahir, email, nomor_telepon)
+	_, errQuery := db.Exec("INSERT INTO `tiket_pesawat` (`id_tiket_pesawat`, `id_pengguna`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `tanggal_lahir`, `email`, `nomor_telepon`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", sha, id_pengguna, nama_depan, nama_belakang, jenis_kelamin, c_tanggal_lahir, email, nomor_telepon)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
