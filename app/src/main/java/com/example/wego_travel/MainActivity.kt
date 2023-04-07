@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(navRegister)
             }
             R.id.btn_login -> {
-                val login = Intent(this, UpdateProfileActivity::class.java)
+                val login = Intent(this, MenuActivity::class.java)
                 startActivity(login)
             }
         }
