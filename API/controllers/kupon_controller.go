@@ -13,8 +13,8 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	tipe_tiket := r.Form.Get("tipe_tiket")
-	id_pengguna := r.Form.Get("id_pengguna")
+	tipe_tiket := r.FormValue("tipe_tiket")
+	id_pengguna := r.FormValue("id_pengguna")
 
 	rows, _ := db.Query("SELECT id_voucher, nama_voucher, nilai, status_penggunaan FROM Voucher WHERE id_pengguna = ? AND tipe_tiket = ?", id_pengguna, tipe_tiket)
 	var vouchersResponse model.VouchersResponse
@@ -23,17 +23,17 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 	for rows.Next() {
 		if err := rows.Scan(&voucher.Id_voucher, &voucher.Nama_voucher, &voucher.Nilai, &voucher.Status_penggunaan); err != nil {
 			log.Println(err)
-			vouchersResponse.Status = 500
-			vouchersResponse.Message = "internal error"
+			SendErrorResponse(w, 500)
 			return
 		} else {
 			vouchersResponse.Data = append(vouchersResponse.Data, voucher)
 			vouchersResponse.Status = 200
 			vouchersResponse.Message = "Success"
+			w.Header().Set("Content-Type", "application/json")
+			json.NewEncoder(w).Encode(vouchersResponse)
+			log.Println("(SUCCESS)\t", "Login request")
 		}
 	}
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(vouchersResponse)
 }
 
 func PakaiKupon(w http.ResponseWriter, r *http.Request) {

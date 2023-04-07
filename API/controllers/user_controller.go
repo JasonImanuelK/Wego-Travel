@@ -113,7 +113,7 @@ func LupaPassword(w http.ResponseWriter, r *http.Request) {
 	}
 	password := r.Form.Get("password")
 	email := r.Form.Get("email")
-	_, errQuery := db.Exec("UPDATE pengguna SET password = ? WHERE email = ", password, email)
+	_, errQuery := db.Exec("UPDATE pengguna SET password = ? WHERE email = ?", password, email)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)

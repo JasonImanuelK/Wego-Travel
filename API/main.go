@@ -25,7 +25,8 @@ func main() {
 	router.HandleFunc("/LihatHistoryHotel/{id_pengguna}", controllers.MelihatHistoryHotel).Methods("GET")
 	router.HandleFunc("/BatalPesanPesawat/{id_tiket_pesawat}", controllers.BatalPesanPesawat).Methods("PUT")
 	router.HandleFunc("/BatalPesanHotel/{id_tiket_hotel}", controllers.BatalPesanHotel).Methods("PUT")
-
+	router.HandleFunc("/SelesaiPesanPesawat/{id_tiket_pesawat}", controllers.SelesaiPesanPesawat).Methods("PUT")
+	router.HandleFunc("/SelesaiPesanHotel/{id_tiket_hotel}", controllers.SelesaiPesanHotel).Methods("PUT")
 	router.HandleFunc("/Pesawat", controllers.LihatListPesawat).Methods("GET")
 	router.HandleFunc("/Pesawat/Kursi/{id_pesawat}", controllers.LihatListKursiPesawat).Methods("GET")
 	router.HandleFunc("/Hotel", controllers.LihatListHotel).Methods("GET")
