@@ -1,16 +1,21 @@
 package com.example.wego_travel
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.android.volley.AuthFailureError
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.example.wego_travel.Models.Article
+import com.google.gson.Gson
+import org.json.JSONException
 import org.json.JSONObject
-import java.io.BufferedWriter
-import java.io.OutputStreamWriter
-import java.net.HttpURLConnection
-import java.net.URL
 
 class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,49 +36,44 @@ class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(back)
             }
             R.id.btn_simpan ->{
-                val url = URL("localhost:8080/UpdateProfil/1")
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "PUT"
-                connection.setRequestProperty("Content-Type", "application/json")
-                connection.doOutput = true
-
-                // Get the form data from the user
-                val namaField = findViewById<EditText>(R.id.nama)
-                val emailField = findViewById<EditText>(R.id.email)
-                val alamatField = findViewById<EditText>(R.id.alamat)
-                val noTelpField = findViewById<EditText>(R.id.no_telp)
-                val tanggalLahirField = findViewById<EditText>(R.id.tanggal_lahir)
-                val nama = namaField.text.toString()
-                val email = emailField.text.toString()
-                val alamat = alamatField.text.toString()
-                val no_telp = noTelpField.text.toString()
-                val tanggal_lahir = tanggalLahirField.text.toString()
-
-                // Create a JSON object with the form data
-                val data = JSONObject()
-                data.put("nama", nama)
-                data.put("email", email)
-                data.put("alamat", alamat)
-                data.put("nomor_telepon", no_telp)
-                data.put("tanggal_lahir", tanggal_lahir)
-
-                // Write the JSON data to the request body
-                val outputStream = connection.outputStream
-                val writer = BufferedWriter(OutputStreamWriter(outputStream))
-                writer.write(data.toString())
-                writer.flush()
-                writer.close()
-                outputStream.close()
-
-                val responseCode = connection.responseCode
-                if (responseCode == HttpURLConnection.HTTP_OK) {
-                    val inputStream = connection.inputStream
-                    val response = inputStream.bufferedReader().use { it.readText() }
-                    // TODO: handle successful response
-                } else {
-                    // TODO: handle error response
+                val articles: ArrayList<Article> = ArrayList()
+                val requestQueue = Volley.newRequestQueue(this)
+                val uri = Uri.parse("https://jsonplaceholder.typicode.com/posts/1").buildUpon()
+                    .build()
+                val stringRequest = object : StringRequest(
+                    Request.Method.GET, uri.toString(),
+                    { response ->
+                        var obj: JSONObject? = null
+                        try {
+                            obj = JSONObject(response)
+                            val jsonArray = obj.getJSONArray("articles")
+                            for (i in 0 until jsonArray.length()) {
+                                val raw = jsonArray.getJSONObject(i)
+                                val gson = Gson()
+                                val a = gson.fromJson(raw.toString(), Article::class.java)
+                                articles.add(a)
+                            }
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
+                    },
+                    { error ->
+                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+                        error.printStackTrace()
+                    }) {
+                        @Throws(AuthFailureError::class)
+                        override fun getHeaders(): Map<String, String> {
+                            val headers: MutableMap<String, String> = HashMap()
+                            headers["User-Agent"] = "Mozilla/5.0"
+                            return headers
+                        }
+                    }
+                requestQueue.add(stringRequest)
+                if(articles.isNotEmpty()) {
+                    Log.v("Hasil : ", "true")
+                }else{
+                    Log.v("Hasil : ", "false")
                 }
-                connection.disconnect()
             }
         }
     }
