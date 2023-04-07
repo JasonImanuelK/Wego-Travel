@@ -9,17 +9,17 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:orientation="vertical">
 
         <ImageView
-            android:src="@drawable/wegotravellogo"
-            android:layout_gravity="center"
             android:layout_width="100dp"
-            android:layout_height="100dp">
-        </ImageView>
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/wegotravellogo"/>
 
         <TextView
             android:id="@+id/labelEmail"
@@ -61,7 +61,8 @@
             android:id="@+id/NoTelepon"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:inputType="textEmailAddress"></EditText>
+            android:inputType="text"
+            android:lines="1"/>
 
         <TextView
             android:id="@+id/labelTanggalLahir"
@@ -105,17 +106,30 @@
             android:layout_height="40dp"
             android:inputType="textPassword"></EditText>
 
-        <info.hoang8f.widget.FButton
-            android:id="@+id/buttonRegister"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="8dp"
-            android:layout_weight="1"
-            android:text="Register"
-            android:textColor="@android:color/white" />
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <TableRow>
 
+                <Button
+                    android:id="@+id/btn_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:text="Register"
+                    android:textColor="@android:color/white" />
+
+                <Button
+                    android:id="@+id/btn_batal_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:text="Batal"
+                    android:textColor="@android:color/white" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
-
 </RelativeLayout>
