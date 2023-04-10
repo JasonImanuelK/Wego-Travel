@@ -25,6 +25,9 @@
             android:name=".HistoryPesawatActivity"
             android:exported="false" />
         <activity
+            android:name=".HistoryHotelActivity"
+            android:exported="false" />
+        <activity
             android:name=".UpdateProfileActivity"
             android:exported="false" />
         <activity

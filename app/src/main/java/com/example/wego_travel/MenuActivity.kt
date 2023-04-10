@@ -42,16 +42,16 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.update_profile -> {
-                val navAirplane = Intent(this, UpdateProfileActivity::class.java)
-                startActivity(navAirplane)
+                val navUpdateProfile = Intent(this, UpdateProfileActivity::class.java)
+                startActivity(navUpdateProfile)
             }
             R.id.lihat_history_pesawat -> {
-                val navHotel = Intent(this, HistoryPesawatActivity::class.java)
-                startActivity(navHotel)
+                val navHistoryPesawat = Intent(this, HistoryPesawatActivity::class.java)
+                startActivity(navHistoryPesawat)
             }
             R.id.lihat_history_hotel -> {
-                val navHotel = Intent(this, UpdateProfileActivity::class.java)
-                startActivity(navHotel)
+                val navHistoryHotel = Intent(this, HistoryHotelActivity::class.java)
+                startActivity(navHistoryHotel)
             }
         }
         return super.onOptionsItemSelected(item)
