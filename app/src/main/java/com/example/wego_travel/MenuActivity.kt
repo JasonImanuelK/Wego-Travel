@@ -46,7 +46,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(navAirplane)
             }
             R.id.lihat_history_pesawat -> {
-                val navHotel = Intent(this, UpdateProfileActivity::class.java)
+                val navHotel = Intent(this, HistoryPesawatActivity::class.java)
                 startActivity(navHotel)
             }
             R.id.lihat_history_hotel -> {
