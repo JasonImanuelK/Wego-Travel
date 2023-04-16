@@ -18,8 +18,13 @@ func LihatListHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	query := "SELECT id_hotel, nama_hotel, alamat_hotel, deskripsi, rating, promo FROM hotel;"
-	rows, err := db.Query(query)
+	kota := r.FormValue("kota")
+	tanggal_inap := r.FormValue("tanggal_inap")
+	akhir_inap := r.FormValue("akhir_inap")
+	jumlah_penginap := r.FormValue("jumlah_penginap")
+
+	query := "SELECT e.id_hotel, e.nama_hotel, e.alamat_hotel, e.deskripsi, e.rating, e.promo FROM (SELECT d.*, IF(d.tipe_kamar = 'Single', 1, IF(d.tipe_kamar = 'Double', 2, IF(d.tipe_kamar = 'Deluxe', 4, 4))) AS 'capacity' FROM (SELECT a.*, b.nomor_kamar, b.tipe_kamar, b.status_kamar, c.tanggal_inap, DATE_ADD(c.tanggal_inap, INTERVAL c.lama_inap DAY) AS 'akhir_inap' FROM kamar_hotel b LEFT JOIN hotel a ON a.id_hotel=b.id_hotel LEFT JOIN tiket_hotel c ON b.id_tiket_hotel=c.id_tiket_hotel) d WHERE SUBSTR(d.alamat_hotel, LOCATE(', ', d.alamat_hotel)+2)=? AND ((? > d.akhir_inap OR ? < d.tanggal_inap ) OR d.tanggal_inap IS NULL)) e HAVING COUNT(e.capacity) >= ?;"
+	rows, err := db.Query(query, kota, tanggal_inap, akhir_inap, jumlah_penginap)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 500)
@@ -55,8 +60,7 @@ func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	param := mux.Vars(r)
-	id_hotel := param["id_hotel"]
+	id_hotel := r.FormValue("id_hotel")
 
 	rows, err := db.Query("SELECT nomor_kamar, tipe_kamar, harga_kamar, status_kamar, id_hotel FROM kamar_hotel WHERE id_hotel=?;", id_hotel)
 	if err != nil {
