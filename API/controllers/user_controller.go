@@ -24,8 +24,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	defer db.Close()
 
 	// Get value from form
-	email := r.FormValue("email")
-	password := r.FormValue("password")
+	errForm := r.ParseForm()
+	if errForm != nil {
+		SendErrorResponse(w, 400)
+		return
+	}
+
+	email := r.Form.Get("email")
+	password := r.Form.Get("password")
+	log.Print(email)
+	log.Print(password)
 
 	// Encrypt password
 	// hasher := md5.New()
