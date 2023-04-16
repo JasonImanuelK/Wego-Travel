@@ -14,4 +14,5 @@
     <string name="labelNama">Nama</string>
     <string name="labelPria">Pria</string>
     <string name="labelWanita">Wanita</string>
+    <string name="nama_pesawat">Nama Pesawat</string>
 </resources>
