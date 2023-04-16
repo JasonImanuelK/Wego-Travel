@@ -18,8 +18,12 @@ func LihatListPesawat(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	query := "SELECT id_pesawat, maskapai, tempat_berangkat, tujuan_berangkat, tanggal_berangkat, jam_berangkat, promo FROM pesawat;"
-	rows, err := db.Query(query)
+	tempat_berangkat := r.FormValue("tempat_berangkat")
+	tujuan_berangkat := r.FormValue("tujuan_berangkat")
+	tanggal_berangkat := r.FormValue("tanggal_berangkat")
+
+	query := "SELECT id_pesawat, maskapai, tempat_berangkat, tujuan_berangkat, tanggal_berangkat, jam_berangkat, promo FROM pesawat WHERE tempat_berangkat=? AND tujuan_berangkat=? AND tanggal_berangkat >= ?;"
+	rows, err := db.Query(query, tempat_berangkat, tujuan_berangkat, tanggal_berangkat)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 500)
