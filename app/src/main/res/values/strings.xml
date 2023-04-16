@@ -11,4 +11,7 @@
     <string name="labelretypepassword">Re-Type Password</string>
     <string name="nama_hotel">Nama Hotel</string>
     <string name="description">Description</string>
+    <string name="labelNama">Nama</string>
+    <string name="labelPria">Pria</string>
+    <string name="labelWanita">Wanita</string>
 </resources>
