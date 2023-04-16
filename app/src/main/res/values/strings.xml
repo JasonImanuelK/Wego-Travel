@@ -15,4 +15,12 @@
     <string name="labelPria">Pria</string>
     <string name="labelWanita">Wanita</string>
     <string name="nama_pesawat">Nama Pesawat</string>
+
+    <string name="labelhotel_nama">Nama : Hotel Astron</string>
+    <string name="labelhotel_rating">Rating : *****</string>
+    <string name="labelPesan">Pesan</string>
+
+    <string name="labelpesawat_asal1">Asal : Bandung</string>
+    <string name="labelpesawat_tujuan1">Tujuan : Singapura</string>
+    <string name="labelpesawat_tanggal1">Tanggal : 20/04/2023</string>
 </resources>
