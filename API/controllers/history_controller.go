@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -53,7 +54,7 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
 	id_pengguna := param["id_pengguna"]
 
-	query := "SELECT id_tiket_pesawat, tanggal_pemesanan, status_pemesanan, id_voucher FROM tiket_hotel WHERE id_pengguna = " + id_pengguna + " ORDER BY tanggal_pemesanan DESC ;"
+	query := "SELECT id_tiket_hotel, tanggal_pemesanan, status_pemesanan, id_voucher FROM tiket_hotel WHERE id_pengguna = " + id_pengguna + " ORDER BY tanggal_pemesanan DESC ;"
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
@@ -69,6 +70,7 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err.Error())
 		} else {
 			list_tiket_hotel = append(list_tiket_hotel, tiket_hotel)
+
 		}
 	}
 
@@ -77,6 +79,9 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 		tiketHotelResponse.Status = 200
 		tiketHotelResponse.Message = "Success"
 		tiketHotelResponse.Data = list_tiket_hotel
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(tiketHotelResponse)
+		log.Println("(SUCCESS)\t", "Login request")
 	} else {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 400)

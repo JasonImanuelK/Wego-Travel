@@ -9,4 +9,6 @@
     <string name="labelnotelepon">Nomor telepon</string>
     <string name="labeltanggallahir">Tanggal Lahir</string>
     <string name="labelretypepassword">Re-Type Password</string>
+    <string name="nama_hotel">Nama Hotel</string>
+    <string name="description">Description</string>
 </resources>
