@@ -59,9 +59,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     val gson = Gson()
                     val a = gson.fromJson(response, Pengguna::class.java)
                     Pengguna.setInstance(a)
-                    Toast.makeText(this, "Login Berhasil!", Toast.LENGTH_LONG).show()
                     val login = Intent(this, MenuActivity::class.java)
                     startActivity(login)
+                    Toast.makeText(this, "Login Berhasil!", Toast.LENGTH_LONG).show()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }

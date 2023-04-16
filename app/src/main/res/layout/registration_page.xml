@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,16 +10,31 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:gravity="center"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:src="@drawable/wegotravellogo"/>
+            android:src="@drawable/wegotravellogo" />
+
+        <TextView
+            android:id="@+id/labelNama"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/labelNama"
+            android:textColor="@android:color/holo_blue_light"></TextView>
+
+
+        <EditText
+            android:id="@+id/nama"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:inputType="textEmailAddress"></EditText>
 
         <TextView
             android:id="@+id/labelEmail"
@@ -28,6 +43,7 @@
             android:gravity="left"
             android:text="@string/labelEmail"
             android:textColor="@android:color/holo_blue_light"></TextView>
+
 
         <EditText
             android:id="@+id/email"
@@ -62,7 +78,7 @@
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:inputType="text"
-            android:lines="1"/>
+            android:lines="1" />
 
         <TextView
             android:id="@+id/labelTanggalLahir"
@@ -76,7 +92,31 @@
             android:id="@+id/TanggalLahir"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:inputType="textEmailAddress"></EditText>
+            android:inputType="date"></EditText>
+
+        <RadioGroup
+            android:id="@+id/gender_radio_group"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <RadioButton
+                android:id="@+id/radio_button_pria"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15sp"
+                android:layout_weight="1"
+                android:text="@string/labelPria" />
+
+            <RadioButton
+                android:id="@+id/radio_button_wanita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="60sp"
+                android:layout_weight="1"
+                android:text="@string/labelWanita" />
+        </RadioGroup>
 
         <TextView
             android:id="@+id/labelPassword"
@@ -132,4 +172,4 @@
             </TableRow>
         </TableLayout>
     </LinearLayout>
-</RelativeLayout>
+</ScrollView>

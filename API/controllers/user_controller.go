@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	// "crypto/md5"
+	// "encoding/hex"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -76,19 +76,27 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	// Get value from form
-	nama := r.FormValue("nama")
-	email := r.FormValue("email")
-	password := r.FormValue("password")
-	jenis_kelamin := r.FormValue("jenis_kelamin")
-	tanggal_lahir := r.FormValue("tanggal_lahir")
-	nomor_telepon := r.FormValue("nomor_telepon")
-	alamat := r.FormValue("alamat")
+	errForm := r.ParseForm()
+	if errForm != nil {
+		SendErrorResponse(w, 400)
+		return
+	}
+
+	nama := r.Form.Get("nama")
+	email := r.Form.Get("email")
+	password := r.Form.Get("password")
+	jenis_kelamin := r.Form.Get("jenis_kelamin")
+	tanggal_lahir := r.Form.Get("tanggal_lahir")
+	nomor_telepon := r.Form.Get("nomor_telepon")
+	alamat := r.Form.Get("alamat")
+	log.Print(email)
+	log.Print(password)
+	log.Print(tanggal_lahir)
 
 	// Encrypt password
-	hasher := md5.New()
-	hasher.Write([]byte(password))
-	encryptedPassword := hex.EncodeToString(hasher.Sum(nil))
+	// hasher := md5.New()
+	// hasher.Write([]byte(password))
+	// encryptedPassword := hex.EncodeToString(hasher.Sum(nil))
 
 	//convert string time to date format
 	date, error := time.Parse("2006-01-02", tanggal_lahir)
@@ -98,7 +106,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Query
-	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat) values (?,?,?,?,?,?,?)", nama, email, encryptedPassword, jenis_kelamin, date, nomor_telepon, alamat)
+	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat) values (?,?,?,?,?,?,?)", nama, email, password, jenis_kelamin, date, nomor_telepon, alamat)
 
 	if errQuery == nil {
 		log.Println("(SUCCESS)\t", "Add new user request")
