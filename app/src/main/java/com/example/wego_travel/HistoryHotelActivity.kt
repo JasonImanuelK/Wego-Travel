@@ -29,7 +29,6 @@ class HistoryHotelActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             setActionBarTitle(title)
             getHistoryHotel()
-            Log.v("HASIL SEBENARNYA : ", list.toString())
         }
     }
 
@@ -37,16 +36,14 @@ class HistoryHotelActivity : AppCompatActivity() {
         supportActionBar?.title = title
     }
 
-    fun getHistoryHotel(): ArrayList<HistoryHotel> {
+    fun getHistoryHotel() {
         val listHistoryHotel: ArrayList<HistoryHotel> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
         val uri = Uri.parse("http://192.168.100.31:8080/LihatHistoryHotel/1").buildUpon()
             .build()
-        Log.v("Ini 1", "LOH")
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),
             { response ->
-                Log.v("Ini 2", "LOH")
                 var obj: JSONObject? = null
                 try {
                     obj = JSONObject(response)
@@ -56,7 +53,6 @@ class HistoryHotelActivity : AppCompatActivity() {
                         val gson = Gson()
                         val a = gson.fromJson(raw.toString(), HistoryHotel::class.java)
                         listHistoryHotel.add(a)
-                        Log.v("Hasil : ", listHistoryHotel.toString())
                     }
                     list.addAll(listHistoryHotel)
                     showRecyclerList()
@@ -70,16 +66,12 @@ class HistoryHotelActivity : AppCompatActivity() {
             }) {
             @Throws
             override fun getHeaders(): Map<String, String> {
-                Log.v("Ini 3", "LOH")
                 val headers: MutableMap<String, String> = HashMap()
                 headers["Content-Type"] = "application/json"
                 return headers
             }
         }
-        Log.v("Ini 4", "LOH")
         requestQueue.add(stringRequest)
-        Log.v("Lah : ", listHistoryHotel.toString())
-        return listHistoryHotel
     }
 
     private fun showRecyclerList() {
