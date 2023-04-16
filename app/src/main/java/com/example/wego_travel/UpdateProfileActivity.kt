@@ -36,44 +36,44 @@ class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(back)
             }
             R.id.btn_simpan ->{
-                val articles: ArrayList<Article> = ArrayList()
-                val requestQueue = Volley.newRequestQueue(this)
-                val uri = Uri.parse("https://jsonplaceholder.typicode.com/posts/1").buildUpon()
-                    .build()
-                val stringRequest = object : StringRequest(
-                    Request.Method.GET, uri.toString(),
-                    { response ->
-                        var obj: JSONObject? = null
-                        try {
-                            obj = JSONObject(response)
-                            val jsonArray = obj.getJSONArray("articles")
-                            for (i in 0 until jsonArray.length()) {
-                                val raw = jsonArray.getJSONObject(i)
-                                val gson = Gson()
-                                val a = gson.fromJson(raw.toString(), Article::class.java)
-                                articles.add(a)
-                            }
-                        } catch (e: JSONException) {
-                            e.printStackTrace()
-                        }
-                    },
-                    { error ->
-                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
-                        error.printStackTrace()
-                    }) {
-                        @Throws(AuthFailureError::class)
-                        override fun getHeaders(): Map<String, String> {
-                            val headers: MutableMap<String, String> = HashMap()
-                            headers["User-Agent"] = "Mozilla/5.0"
-                            return headers
-                        }
-                    }
-                requestQueue.add(stringRequest)
-                if(articles.isNotEmpty()) {
-                    Log.v("Hasil : ", "true")
-                }else{
-                    Log.v("Hasil : ", "false")
-                }
+//                val articles: ArrayList<Article> = ArrayList()
+//                val requestQueue = Volley.newRequestQueue(this)
+//                val uri = Uri.parse("localhost:8080/UpdateProfil/").buildUpon()
+//                    .build()
+//                val stringRequest = object : StringRequest(
+//                    Request.Method.GET, uri.toString(),
+//                    { response ->
+//                        var obj: JSONObject? = null
+//                        try {
+//                            obj = JSONObject(response)
+//                            val jsonArray = obj.getJSONArray("articles")
+//                            for (i in 0 until jsonArray.length()) {
+//                                val raw = jsonArray.getJSONObject(i)
+//                                val gson = Gson()
+//                                val a = gson.fromJson(raw.toString(), Article::class.java)
+//                                articles.add(a)
+//                            }
+//                        } catch (e: JSONException) {
+//                            e.printStackTrace()
+//                        }
+//                    },
+//                    { error ->
+//                        Toast.makeText(this, error.message, Toast.LENGTH_SHORT).show()
+//                        error.printStackTrace()
+//                    }) {
+//                        @Throws(AuthFailureError::class)
+//                        override fun getHeaders(): Map<String, String> {
+//                            val headers: MutableMap<String, String> = HashMap()
+//                            headers["User-Agent"] = "Mozilla/5.0"
+//                            return headers
+//                        }
+//                    }
+//                requestQueue.add(stringRequest)
+//                if(articles.isNotEmpty()) {
+//                    Log.v("Hasil : ", "true")
+//                }else{
+//                    Log.v("Hasil : ", "false")
+//                }
             }
         }
     }
