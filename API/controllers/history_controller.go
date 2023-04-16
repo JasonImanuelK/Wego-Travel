@@ -41,6 +41,9 @@ func MelihatHistoryPesawat(w http.ResponseWriter, r *http.Request) {
 		tiketPesawatResponse.Status = 200
 		tiketPesawatResponse.Message = "Success"
 		tiketPesawatResponse.Data = list_tiket_pesawat
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(tiketPesawatResponse)
+		log.Println("(SUCCESS)\t", "Login request")
 	} else {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 400)
