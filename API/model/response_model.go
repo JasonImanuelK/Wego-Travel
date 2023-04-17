@@ -19,6 +19,7 @@ type UserResponse struct {
 	Status  int      `json:"status"`
 	Message string   `json:"message"`
 	Data    Pengguna `json:"data"`
+	Token   string   `json:"token"`
 }
 
 type UsersResponse struct {
