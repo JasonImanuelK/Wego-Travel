@@ -24,7 +24,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View){
         when(v.id){
             R.id.img_airplane ->{
-                val navAirplane = Intent(this, MainActivity::class.java)
+                val navAirplane = Intent(this, FilterPesawatActivity::class.java)
                 startActivity(navAirplane)
             }
             R.id.img_hotel -> {

@@ -18,10 +18,28 @@ func LihatListHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	kota := r.FormValue("kota")
-	tanggal_inap := r.FormValue("tanggal_inap")
-	akhir_inap := r.FormValue("akhir_inap")
-	jumlah_penginap := r.FormValue("jumlah_penginap")
+	errForm := r.ParseForm()
+	if errForm != nil {
+		SendErrorResponse(w, 400)
+		return
+	}
+
+	vars := mux.Vars(r)
+
+	kota := vars["kota"]
+	tanggal_inap := vars["tanggal_inap"]
+	akhir_inap := vars["akhir_inap"]
+	jumlah_penginap := vars["jumlah_penginap"]
+
+	// kota := r.FormValue("kota")
+	// tanggal_inap := r.FormValue("tanggal_inap")
+	// akhir_inap := r.FormValue("akhir_inap")
+	// jumlah_penginap := r.FormValue("jumlah_penginap")
+
+	log.Print(kota)
+	log.Print(tanggal_inap)
+	log.Print(akhir_inap)
+	log.Print(jumlah_penginap)
 
 	query := "SELECT e.id_hotel, e.nama_hotel, e.alamat_hotel, e.deskripsi, e.rating, e.promo FROM (SELECT d.*, IF(d.tipe_kamar = 'Single', 1, IF(d.tipe_kamar = 'Double', 2, IF(d.tipe_kamar = 'Deluxe', 4, 4))) AS 'capacity' FROM (SELECT a.*, b.nomor_kamar, b.tipe_kamar, b.status_kamar, c.tanggal_inap, DATE_ADD(c.tanggal_inap, INTERVAL c.lama_inap DAY) AS 'akhir_inap' FROM kamar_hotel b LEFT JOIN hotel a ON a.id_hotel=b.id_hotel LEFT JOIN tiket_hotel c ON b.id_tiket_hotel=c.id_tiket_hotel) d WHERE SUBSTR(d.alamat_hotel, LOCATE(', ', d.alamat_hotel)+2)=? AND ((? > d.akhir_inap OR ? < d.tanggal_inap ) OR d.tanggal_inap IS NULL)) e HAVING COUNT(e.capacity) >= ?;"
 	rows, err := db.Query(query, kota, tanggal_inap, akhir_inap, jumlah_penginap)
@@ -60,7 +78,8 @@ func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	id_hotel := r.FormValue("id_hotel")
+	vars := mux.Vars(r)
+	id_hotel := vars["id_hotel"]
 
 	rows, err := db.Query("SELECT nomor_kamar, tipe_kamar, harga_kamar, status_kamar, id_hotel FROM kamar_hotel WHERE id_hotel=?;", id_hotel)
 	if err != nil {
@@ -98,14 +117,19 @@ func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	nomor_kamar := r.FormValue("nomor_kamar")
-	id_pengguna := r.FormValue("id_pengguna")
-	id_voucher := r.FormValue("id_voucher")
-	nama_penginap := r.FormValue("nama_penginap")
-	jenis_kelamin := r.FormValue("jenis_kelamin")
-	tanggal_lahir := r.FormValue("tanggal_lahir")
-	tanggal_inap := r.FormValue("tanggal_inap")
-	lama_inap := r.FormValue("lama_inap")
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
+
+	nomor_kamar := r.Form.Get("nomor_kamar")
+	id_pengguna := r.Form.Get("id_pengguna")
+	id_voucher := r.Form.Get("id_voucher")
+	nama_penginap := r.Form.Get("nama_penginap")
+	jenis_kelamin := r.Form.Get("jenis_kelamin")
+	tanggal_lahir := r.Form.Get("tanggal_lahir")
+	tanggal_inap := r.Form.Get("tanggal_inap")
+	lama_inap := r.Form.Get("lama_inap")
 
 	c_tanggal_lahir, err := time.Parse("2006-01-02", tanggal_lahir)
 	if err != nil {
@@ -147,8 +171,12 @@ func BatalPesanHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	param := mux.Vars(r)
-	id_tiket_hotel := param["id_tiket_hotel"]
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
+
+	id_tiket_hotel := r.Form.Get("id_tiket_hotel")
 
 	_, errQuery := db.Exec("UPDATE tiket_hotel th INNER JOIN kamar_hotel kh ON th.id_tiket_hotel = kh.id_tiket_hotel SET th.status_pemesanan = 'Dikembalikan' AND kh.status_kamar = 'Kosong' WHERE th.id_tiket_hotel = ?", id_tiket_hotel)
 
@@ -164,10 +192,30 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	param := mux.Vars(r)
-	id_tiket_hotel := param["id_tiket_hotel"]
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
 
-	_, errQuery := db.Exec("UPDATE tiket_hotel th INNER JOIN kamar_hotel kh ON th.id_tiket_hotel = kh.id_tiket_hotel SET th.status_pemesanan = 'Selesai' AND kh.status_kamar = 'Kosong' WHERE th.id_tiket_hotel = ?", id_tiket_hotel)
+	id_tiket_hotel := r.Form.Get("id_tiket_hotel")
+
+	_, errQuery := db.Exec("UPDATE tiket_hotel SET status_pemesanan = 'Selesai' WHERE id_tiket_hotel = ?", id_tiket_hotel)
+
+	if errQuery == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery2 := db.Exec("UPDATE tiket_hotel SET status_pemesanan = 'Selesai' WHERE id_tiket_hotel = ?", id_tiket_hotel)
+
+	if errQuery2 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery2.Error())
+		SendErrorResponse(w, 400)
+	}
 
 	if errQuery == nil {
 		SendSuccessResponse(w)

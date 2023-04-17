@@ -26,4 +26,9 @@
     <string name="nama_kupon">Nama Kupon</string>
     <string name="status_kupon">Status Kupon</string>
     <string name="status_pemesanan">Status Pemesanan</string>
+    <string name="nama_pesan_hotel">Nama :</string>
+    <string name="tanggallahir_pesan_hotel">Tanggal Lahir :</string>
+    <string name="pembayaran_pesan_hotel">Pembayaran :</string>
+    <string name="durasi_menginap">Durasi Menginap :</string>
+    <string name="voucher_pesan_hotel">Voucher :</string>
 </resources>
