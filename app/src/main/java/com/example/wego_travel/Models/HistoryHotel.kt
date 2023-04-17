@@ -14,5 +14,5 @@ data class HistoryHotel (
     @SerializedName("status_pemesanan")
     var status_pemesanan: String,
     @SerializedName("id_voucher")
-    var id_voucher:Int
+    var id_voucher:Int?
 ) : Parcelable

@@ -10,6 +10,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.wego_travel.Models.HistoryHotel
+import com.example.wego_travel.Models.Pengguna
 import com.example.wego_travel.databinding.ActivityHistoryHotelBinding
 import com.google.gson.Gson
 import org.json.JSONException
@@ -18,7 +19,8 @@ import org.json.JSONObject
 class HistoryHotelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryHotelBinding
     private val list = ArrayList<HistoryHotel>()
-    private var title = "Mode List"
+    private var title = "History Hotel"
+    private val pengguna = Pengguna.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryHotelBinding.inflate(layoutInflater)
@@ -39,7 +41,7 @@ class HistoryHotelActivity : AppCompatActivity() {
     fun getHistoryHotel() {
         val listHistoryHotel: ArrayList<HistoryHotel> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/LihatHistoryHotel/1").buildUpon()
+        val uri = Uri.parse("http://172.20.10.9:8080/LihatHistoryHotel/"+pengguna.id_pengguna.toString()).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),

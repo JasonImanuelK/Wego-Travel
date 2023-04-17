@@ -9,16 +9,16 @@ import java.util.Date
 data class Pengguna (
     @SerializedName("id_pengguna")
     var id_pengguna: Int,
-    @SerializedName("name")
-    var name:String,
+    @SerializedName("nama")
+    var nama:String,
     @SerializedName("email")
     var email: String,
     @SerializedName("password")
     var password:String,
-    @SerializedName("jenis_kelamin")
-    var jenis_kelamin:String,
-    @SerializedName("tanggal_lahir")
-    var tanggal_lahir:Date,
+    @SerializedName("Jenis_kelamin")
+    var Jenis_kelamin:String,
+    @SerializedName("Tanggal_lahir")
+    var Tanggal_lahir:Date?,
     @SerializedName("nomor_telepon")
     var nomor_telepon:String,
     @SerializedName("alamat")

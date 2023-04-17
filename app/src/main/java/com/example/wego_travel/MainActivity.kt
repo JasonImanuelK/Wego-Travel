@@ -50,14 +50,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val requestBody = "email="+email+"&password="+password
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Login").buildUpon()
+        val uri = Uri.parse("http://172.20.10.9:8080/Login").buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.POST, uri.toString(),
             { response ->
                 try {
                     val gson = Gson()
-                    val a = gson.fromJson(response, Pengguna::class.java)
+                    val jsonObject = JSONObject(response)
+                    val dataObject = jsonObject.getJSONObject("data")
+                    val a = gson.fromJson(dataObject.toString(), Pengguna::class.java)
+                    Log.v("Hasil : ", a.toString())
                     Pengguna.setInstance(a)
                     val login = Intent(this, MenuActivity::class.java)
                     startActivity(login)
