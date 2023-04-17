@@ -20,7 +20,6 @@ func main() {
 	router.HandleFunc("/UpdateProfil/{id_pengguna}", controllers.PerbaruiProfil).Methods("PUT")
 	router.HandleFunc("/LihatKupon", controllers.LihatKupon).Methods("GET")
 	router.HandleFunc("/PakaiKupon/{id_voucher}", controllers.PakaiKupon).Methods("PUT")
-	router.HandleFunc("/LihatKupon", controllers.LihatKupon).Methods("GET")
 	router.HandleFunc("/LihatHistoryPesawat/{id_pengguna}", controllers.MelihatHistoryPesawat).Methods("GET")
 	router.HandleFunc("/LihatHistoryHotel/{id_pengguna}", controllers.MelihatHistoryHotel).Methods("GET")
 	router.HandleFunc("/BatalPesanPesawat/{id_tiket_pesawat}", controllers.BatalPesanPesawat).Methods("PUT")
