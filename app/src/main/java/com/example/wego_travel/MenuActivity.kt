@@ -53,6 +53,10 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
                 val navHistoryHotel = Intent(this, HistoryHotelActivity::class.java)
                 startActivity(navHistoryHotel)
             }
+            R.id.lihat_kupon -> {
+                val navKupon = Intent(this, LihatKuponActivity::class.java)
+                startActivity(navKupon)
+            }
         }
         return super.onOptionsItemSelected(item)
     }

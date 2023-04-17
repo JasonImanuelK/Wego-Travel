@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val requestBody = "email="+email+"&password="+password
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://172.20.10.9:8080/Login").buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/Login").buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.POST, uri.toString(),

@@ -3,19 +3,14 @@ package com.example.wego_travel
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.wego_travel.Models.Article
 import com.example.wego_travel.Models.Pengguna
-import com.google.gson.Gson
 import org.json.JSONException
-import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -102,7 +97,7 @@ class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
         requestBody.substring(1)
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://172.20.10.9:8080/UpdateProfil/"+pengguna.id_pengguna.toString()).buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/UpdateProfil/"+pengguna.id_pengguna.toString()).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.PUT, uri.toString(),
