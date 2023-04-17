@@ -24,7 +24,7 @@
         android:layout_toRightOf="@id/img_item_photo"
         android:orientation="vertical">
         <TextView
-            android:id="@+id/tv_history_hotel_name"
+            android:id="@+id/tv_pesan_hotel_name"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
@@ -33,7 +33,7 @@
             tools:text="@string/nama_hotel"/>
 
         <TextView
-            android:id="@+id/tv_history_hotel_description"
+            android:id="@+id/tv_pesan_hotel_description"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
             android:ellipsize="end"
@@ -47,7 +47,7 @@
         android:layout_marginLeft="300dp"
         android:layout_marginTop="20dp">
             <Button
-                android:id="@+id/pesan"
+                android:id="@+id/pesan_hotel"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"

@@ -19,7 +19,7 @@ import org.json.JSONObject
 class PesanPesawatActivity : AppCompatActivity() {
     private val list = ArrayList<Pesawat>()
     private lateinit var binding: ActivityPesanPesawatBinding
-    private var title = "History Pesawat"
+    private var title = "List Pesawat"
     companion object {
         const val ASAL = "asal"
         const val TUJUAN = "tujuan"

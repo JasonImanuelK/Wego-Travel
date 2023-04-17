@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundapp"
+    tools:context=".FilterHotelActivity">
+
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_centerInParent="true"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:src="@drawable/wegotravellogo"
+        android:layout_width="200dp"
+        android:layout_height="200dp">
+    </ImageView>
+
+    <TextView
+        android:gravity="center"
+        android:id="@+id/Slogan"
+        android:text="@string/Slogan"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <TextView
+        android:gravity="left"
+        android:layout_marginTop="50dp"
+        android:text="Kota"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <EditText
+        android:id="@+id/kota_filter"
+        android:layout_height="40dp"
+        android:layout_width="200dp"
+        android:inputType="text">
+    </EditText>
+
+    <TextView
+        android:gravity="left"
+        android:text="Tanggal Inap"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <EditText
+        android:id="@+id/tanggal_inap_filter"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:inputType="date">
+    </EditText>
+
+    <TextView
+        android:gravity="left"
+        android:text="Akhir Inap"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <EditText
+        android:id="@+id/akhir_inap_filter"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:inputType="date">
+    </EditText>
+
+    <TextView
+        android:gravity="left"
+        android:text="Jumlah Penginap"
+        android:textColor="@android:color/holo_blue_light"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content">
+    </TextView>
+
+    <EditText
+        android:id="@+id/jumlah_penginap_filter"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:inputType="numberDecimal">
+    </EditText>
+</LinearLayout>
+
+<LinearLayout
+android:orientation="horizontal"
+android:layout_alignParentBottom="true"
+android:weightSum="2"
+android:layout_width="match_parent"
+android:layout_height="wrap_content">
+
+<Button
+    android:id="@+id/btn_cari_hotel"
+    style="@style/Widget.AppCompat.Button.Colored"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:text="CARI"
+    android:textSize="12sp" />
+
+<Button
+    android:id="@+id/btn_kembali_filter_hotel"
+    style="@style/Widget.AppCompat.Button.Colored"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_weight="1"
+    android:text="KEMBALI"
+    android:textSize="12sp" />
+
+</LinearLayout>
+
+    </RelativeLayout>

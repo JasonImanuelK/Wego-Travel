@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.webkit.CookieManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -13,9 +14,13 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.wego_travel.Models.Pengguna
+import com.example.wego_travel.Models.Token
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
+import java.net.HttpCookie
+import java.net.URL
+import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,7 +62,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     val jsonObject = JSONObject(response)
                     val dataObject = jsonObject.getJSONObject("data")
                     val a = gson.fromJson(dataObject.toString(), Pengguna::class.java)
-                    Log.v("Hasil : ", a.toString())
                     Pengguna.setInstance(a)
                     val login = Intent(this, MenuActivity::class.java)
                     startActivity(login)

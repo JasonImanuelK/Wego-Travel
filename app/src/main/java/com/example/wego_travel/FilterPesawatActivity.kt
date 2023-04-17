@@ -40,7 +40,6 @@ class FilterPesawatActivity : AppCompatActivity(), View.OnClickListener {
                 val edtTempatKeberangkatan : EditText = findViewById(R.id.tempat_berangkat_filter)
                 val edtTujuanKeberangkatan : EditText = findViewById(R.id.tujuan_berangkat_filter)
                 val edtTanggalKeberangkatan : EditText = findViewById(R.id.tanggal_berangkat_filter)
-                val sdf = SimpleDateFormat("yyyy-MM-dd")
                 val moveWithDataIntent = Intent(this@FilterPesawatActivity, PesanPesawatActivity::class.java)
 
                 moveWithDataIntent.putExtra(PesanPesawatActivity.ASAL, edtTempatKeberangkatan.text.toString())
