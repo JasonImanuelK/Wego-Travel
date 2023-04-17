@@ -5,8 +5,8 @@ type Pengguna struct {
 	Nama          string `json:"nama"`
 	Email         string `json:"email"`
 	Password      string `json:"password"`
-	Jenis_kelamin string `json:"jenis_kelamin`
-	Tanggal_lahir string `json:tanggal_lahir`
+	Jenis_kelamin string `json:"jenis_kelamin"`
+	Tanggal_lahir string `json:"tanggal_lahir"`
 	Nomor_telepon int    `json:"nomor_telepon"`
 	Alamat        string `json:"alamat"`
 }

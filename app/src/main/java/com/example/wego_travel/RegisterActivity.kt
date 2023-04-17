@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
         val requestBody = "nama="+nama+"&email="+email+"&password="+password+"&jenis_kelamin="+jenis_kelamin+"&tanggal_lahir="+tanggal_lahir+"&nomor_telepon="+nomor_telepon+"&alamat="+alamat
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://172.20.10.9:8080/Register").buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/Register").buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.POST, uri.toString(),

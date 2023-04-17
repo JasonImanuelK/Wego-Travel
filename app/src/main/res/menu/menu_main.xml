@@ -15,4 +15,9 @@
         android:id="@+id/lihat_history_hotel"
         android:title="Lihat History Hotel"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/lihat_kupon"
+        android:title="Lihat Kupon"
+        app:showAsAction="never" />
 </menu>

@@ -3,19 +3,14 @@ package com.example.wego_travel
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import com.android.volley.AuthFailureError
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.wego_travel.Models.Article
 import com.example.wego_travel.Models.Pengguna
-import com.google.gson.Gson
 import org.json.JSONException
-import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -39,14 +34,14 @@ class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
         val edtAlamat : EditText = findViewById(R.id.update_alamat)
         edtNama.setText(pengguna.nama)
         edtEmail.setText(pengguna.email)
-        edtTanggalLahir.setText(sdf.format(pengguna.Tanggal_lahir))
+        edtTanggalLahir.setText(sdf.format(pengguna.tanggal_lahir))
         edtNomorTelepon.setText(pengguna.nomor_telepon)
         edtAlamat.setText(pengguna.alamat)
         val selectedRadioButton : RadioButton
-        if (pengguna.Jenis_kelamin=="Pria"){
+        if (pengguna.jenis_kelamin=="Pria"){
             selectedRadioButton = findViewById(R.id.update_radio_button_pria)
             selectedRadioButton.setChecked(true)
-        } else if (pengguna.Jenis_kelamin=="Wanita"){
+        } else if (pengguna.jenis_kelamin=="Wanita"){
             selectedRadioButton = findViewById(R.id.update_radio_button_wanita)
             selectedRadioButton.setChecked(true)
         }
@@ -83,13 +78,13 @@ class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
             requestBody += "&email="+email
             pengguna.email = email
         }
-        if (jenis_kelamin!=pengguna.Jenis_kelamin){
+        if (jenis_kelamin!=pengguna.jenis_kelamin){
             requestBody += "&email="+jenis_kelamin
-            pengguna.Jenis_kelamin = jenis_kelamin
+            pengguna.jenis_kelamin = jenis_kelamin
         }
-        if (tanggal_lahir!=pengguna.Tanggal_lahir.toString()){
+        if (tanggal_lahir!=pengguna.tanggal_lahir.toString()){
             requestBody += "&tanggal_lahir="+tanggal_lahir
-            pengguna.Tanggal_lahir = stringToDate(tanggal_lahir, "yyyy-MM-dd")
+            pengguna.tanggal_lahir = stringToDate(tanggal_lahir, "yyyy-MM-dd")
         }
         if (nomor_telepon!=pengguna.nomor_telepon){
             requestBody += "&nomor_telepon="+nomor_telepon
@@ -102,7 +97,7 @@ class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
         requestBody.substring(1)
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://172.20.10.9:8080/UpdateProfil/"+pengguna.id_pengguna.toString()).buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/UpdateProfil/"+pengguna.id_pengguna.toString()).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.PUT, uri.toString(),

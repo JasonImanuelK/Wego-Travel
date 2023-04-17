@@ -3,33 +3,35 @@ package com.example.wego_travel
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.wego_travel.Models.HistoryPesawat
+import com.example.wego_travel.Models.Kupon
 import com.example.wego_travel.Models.Pengguna
-import com.example.wego_travel.databinding.ActivityHistoryPesawatBinding
+import com.example.wego_travel.databinding.ActivityLihatKuponBinding
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
 
-class HistoryPesawatActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityHistoryPesawatBinding
-    private val list = ArrayList<HistoryPesawat>()
-    private var title = "History Pesawat"
+class LihatKuponActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLihatKuponBinding
+    private val list = ArrayList<Kupon>()
+    private var title = "Kupon"
     private val pengguna = Pengguna.getInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityHistoryPesawatBinding.inflate(layoutInflater)
+        binding = ActivityLihatKuponBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvHistoryPesawat.setHasFixedSize(true)
+        binding.rvLihatKupon.setHasFixedSize(true)
 
         if (savedInstanceState == null) {
             setActionBarTitle(title)
-            getHistoryPesawat()
+            getLihatKupon()
         }
     }
 
@@ -37,11 +39,12 @@ class HistoryPesawatActivity : AppCompatActivity() {
         supportActionBar?.title = title
     }
 
-    fun getHistoryPesawat() {
-        val listHistoryPesawat: ArrayList<HistoryPesawat> = ArrayList()
+    fun getLihatKupon() {
+        val listKupon: ArrayList<Kupon> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/LihatHistoryPesawat/"+pengguna.id_pengguna.toString()).buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/LihatKupon/"+pengguna.id_pengguna.toString()).buildUpon()
             .build()
+        Log.v("Id Pengguna : ", pengguna.id_pengguna.toString())
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),
             { response ->
@@ -52,11 +55,12 @@ class HistoryPesawatActivity : AppCompatActivity() {
                     for (i in 0 until jsonArray.length()) {
                         val raw = jsonArray.getJSONObject(i)
                         val gson = Gson()
-                        val a = gson.fromJson(raw.toString(), HistoryPesawat::class.java)
-                        listHistoryPesawat.add(a)
+                        val a = gson.fromJson(raw.toString(), Kupon::class.java)
+                        listKupon.add(a)
+                        Log.v("Hasil : ", listKupon.toString())
                     }
-                    list.addAll(listHistoryPesawat)
-                    showRecyclerList()
+                    list.addAll(listKupon)
+                    showRecyclerGrid()
                 } catch (e: JSONException) {
                     e.printStackTrace()
                 }
@@ -75,9 +79,9 @@ class HistoryPesawatActivity : AppCompatActivity() {
         requestQueue.add(stringRequest)
     }
 
-    private fun showRecyclerList() {
-        binding.rvHistoryPesawat.layoutManager = LinearLayoutManager(this)
-        val listHistoryPesawawatAdapter = ListHistoryPesawatAdapter(list)
-        binding.rvHistoryPesawat.adapter = listHistoryPesawawatAdapter
+    private fun showRecyclerGrid() {
+        binding.rvLihatKupon.layoutManager = GridLayoutManager(this, 2)
+        val gridKuponAdapter = GridKuponAdapter(list)
+        binding.rvLihatKupon.adapter = gridKuponAdapter
     }
 }
