@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -16,23 +15,15 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 
 	param := mux.Vars(r)
 	id_pengguna := param["id_pengguna"]
-	tipe_tiket := param["tipe_tiket"]
 
-	var rows *sql.Rows
-
-	if tipe_tiket != "" {
-		url := "SELECT id_voucher, nama_voucher, nilai, tipe_tiket, status_penggunaan FROM Voucher WHERE id_pengguna = ?"
-		rows, _ = db.Query(url, id_pengguna)
-	} else {
-		url := "SELECT id_voucher, nama_voucher, nilai, tipe_tiket, status_penggunaan FROM Voucher WHERE id_pengguna = ? AND tipe_tiket = ?"
-		rows, _ = db.Query(url, id_pengguna, tipe_tiket)
-	}
+	url := "SELECT id_voucher, nama_voucher, nilai, tipe_tiket, status_penggunaan FROM Voucher WHERE id_pengguna = ?"
+	rows, _ := db.Query(url, id_pengguna)
 
 	var vouchersResponse model.VouchersResponse
 	var voucher model.Voucher
 
 	for rows.Next() {
-		if err := rows.Scan(&voucher.Id_voucher, &voucher.Nama_voucher, &voucher.Tipe_tiket, &voucher.Nilai, &voucher.Status_penggunaan); err != nil {
+		if err := rows.Scan(&voucher.Id_voucher, &voucher.Nama_voucher, &voucher.Nilai, &voucher.Tipe_tiket, &voucher.Status_penggunaan); err != nil {
 			log.Println(err)
 			SendErrorResponse(w, 500)
 			return
@@ -40,11 +31,39 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 			vouchersResponse.Data = append(vouchersResponse.Data, voucher)
 			vouchersResponse.Status = 200
 			vouchersResponse.Message = "Success"
-			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(vouchersResponse)
-			log.Println("(SUCCESS)\t", "Login request")
 		}
 	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(vouchersResponse)
+}
+
+func LihatKuponBerdasarkanTipeTiket(w http.ResponseWriter, r *http.Request) {
+	db := Connect()
+	defer db.Close()
+
+	param := mux.Vars(r)
+	id_pengguna := param["id_pengguna"]
+	tipe_tiket := param["tipe_tiket"]
+
+	url := "SELECT id_voucher, nama_voucher, nilai, tipe_tiket, status_penggunaan FROM Voucher WHERE id_pengguna = ? AND tipe_tiket = ?"
+	rows, _ := db.Query(url, id_pengguna, tipe_tiket)
+
+	var vouchersResponse model.VouchersResponse
+	var voucher model.Voucher
+
+	for rows.Next() {
+		if err := rows.Scan(&voucher.Id_voucher, &voucher.Nama_voucher, &voucher.Nilai, &voucher.Tipe_tiket, &voucher.Status_penggunaan); err != nil {
+			log.Println(err)
+			SendErrorResponse(w, 500)
+			return
+		} else {
+			vouchersResponse.Data = append(vouchersResponse.Data, voucher)
+			vouchersResponse.Status = 200
+			vouchersResponse.Message = "Success"
+		}
+	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(vouchersResponse)
 }
 
 func PakaiKupon(w http.ResponseWriter, r *http.Request) {

@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PesanHotelActivity"
-    android:id="@+id/action_cardview"
-    android:layout_gravity="center"
-    android:background="@drawable/backgroundapp">
+    tools:context=".LihatKuponActivity">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_pesan_hotel"
+        android:id="@+id/rv_lihat_kupon"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/item_row_pesan_hotel" />
+        tools:listitem="@layout/item_grid_kupon" />
 </RelativeLayout>

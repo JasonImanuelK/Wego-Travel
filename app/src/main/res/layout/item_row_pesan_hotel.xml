@@ -33,15 +33,6 @@
             tools:text="@string/nama_hotel"/>
 
         <TextView
-            android:id="@+id/tv_status_pemesanan"
-            android:layout_width="220dp"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:layout_marginBottom="8dp"
-            android:maxLines="2"
-            tools:text="@string/status_pemesanan"/>
-
-        <TextView
             android:id="@+id/tv_history_hotel_description"
             android:layout_width="220dp"
             android:layout_height="wrap_content"
@@ -53,24 +44,14 @@
     <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="300dp">
-        <TableRow>
+        android:layout_marginLeft="300dp"
+        android:layout_marginTop="20dp">
             <Button
-            android:id="@+id/refund"
-            style="@style/Widget.AppCompat.Button.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:text="REFUND"
-            android:textSize="10sp" />
-        </TableRow>
-        <TableRow>
-            <Button
-                android:id="@+id/qr"
+                android:id="@+id/pesan"
                 style="@style/Widget.AppCompat.Button.Colored"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:text="QR"
+                android:text="PESAN"
                 android:textSize="10sp" />
-        </TableRow>
     </TableLayout>
 </RelativeLayout>

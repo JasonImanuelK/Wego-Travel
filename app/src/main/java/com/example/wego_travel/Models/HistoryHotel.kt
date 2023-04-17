@@ -7,6 +7,8 @@ import java.util.Date
 
 @Parcelize
 data class HistoryHotel (
+    @SerializedName("nama_hotel")
+    var nama_hotel: String,
     @SerializedName("id_tiket_hotel")
     var id_tiket_hotel: Int,
     @SerializedName("tanggal_pemesanan")
