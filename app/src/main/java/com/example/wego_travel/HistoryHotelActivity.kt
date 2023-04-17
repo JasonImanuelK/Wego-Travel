@@ -41,7 +41,7 @@ class HistoryHotelActivity : AppCompatActivity() {
     fun getHistoryHotel() {
         val listHistoryHotel: ArrayList<HistoryHotel> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://172.20.10.9:8080/LihatHistoryHotel/"+pengguna.id_pengguna.toString()).buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/LihatHistoryHotel/"+pengguna.id_pengguna.toString()).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),
