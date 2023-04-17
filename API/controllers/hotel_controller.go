@@ -235,7 +235,7 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 		fmt.Println(err.Error())
 	}
 
-	_, errQuery2 := db.Exec("UPDATE voucher SET status_penggunaan = 'Tidak Berlaku' WHERE id_voucher = ?", id_voucher)
+	_, errQuery2 := db.Exec("UPDATE voucher SET status_penggunaan = 'Berlaku' WHERE id_voucher = ?", id_voucher)
 
 	if errQuery2 == nil {
 		SendSuccessResponse(w)
