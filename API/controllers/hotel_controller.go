@@ -228,6 +228,22 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 		SendErrorResponse(w, 400)
 	}
 
+	var id_voucher int
+	row := db.QueryRow("SELECT id_voucher FROM tiket_hotel WHERE id_tiket_hotel = ?", id_tiket_hotel)
+
+	if err := row.Scan(&id_voucher); err != nil {
+		fmt.Println(err.Error())
+	}
+
+	_, errQuery2 := db.Exec("UPDATE voucher SET status_penggunaan = 'Tidak Berlaku' WHERE id_voucher = ?", id_voucher)
+
+	if errQuery2 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery2.Error())
+		SendErrorResponse(w, 400)
+	}
+
 	_, errQuery3 := db.Exec("UPDATE kamar_hotel SET status_kamar = 'Kosong', id_tiket_hotel = NULL WHERE id_tiket_hotel = ?", id_tiket_hotel)
 
 	if errQuery3 == nil {

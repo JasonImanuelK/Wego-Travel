@@ -179,6 +179,22 @@ func BatalPesanPesawat(w http.ResponseWriter, r *http.Request) {
 		SendErrorResponse(w, 400)
 	}
 
+	var id_voucher int
+	row := db.QueryRow("SELECT id_voucher FROM tiket_pesawat WHERE id_tiket_pesawat = ?", id_tiket_pesawat)
+
+	if err := row.Scan(&id_voucher); err != nil {
+		fmt.Println(err.Error())
+	}
+
+	_, errQuery2 := db.Exec("UPDATE voucher SET status_penggunaan = 'Tidak Berlaku' WHERE id_voucher = ?", id_voucher)
+
+	if errQuery2 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery2.Error())
+		SendErrorResponse(w, 400)
+	}
+
 	_, errQuery3 := db.Exec("UPDATE kursi_pesawat SET status_kursi = 'Kosong', id_tiket_pesawat = NULL WHERE id_tiket_pesawat = ?", id_tiket_pesawat)
 
 	if errQuery3 == nil {
