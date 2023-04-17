@@ -9,6 +9,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.wego_travel.Models.HistoryPesawat
+import com.example.wego_travel.Models.Pengguna
 import com.example.wego_travel.databinding.ActivityHistoryPesawatBinding
 import com.google.gson.Gson
 import org.json.JSONException
@@ -18,6 +19,7 @@ class HistoryPesawatActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHistoryPesawatBinding
     private val list = ArrayList<HistoryPesawat>()
     private var title = "History Pesawat"
+    private val pengguna = Pengguna.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHistoryPesawatBinding.inflate(layoutInflater)
@@ -38,7 +40,7 @@ class HistoryPesawatActivity : AppCompatActivity() {
     fun getHistoryPesawat() {
         val listHistoryPesawat: ArrayList<HistoryPesawat> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/LihatHistoryPesawat/3").buildUpon()
+        val uri = Uri.parse("http://172.20.10.9:8080/LihatHistoryPesawat/"+pengguna.id_pengguna.toString()).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),
