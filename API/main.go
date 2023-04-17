@@ -18,7 +18,7 @@ func main() {
 	router.HandleFunc("/Register", controllers.Register).Methods("POST")
 	router.HandleFunc("/LupaPassword", controllers.Authenticate(controllers.LupaPassword, 1)).Methods("PUT")
 	router.HandleFunc("/UpdateProfil/{id_pengguna}", controllers.PerbaruiProfil).Methods("PUT")
-	router.HandleFunc("/LihatKupon", controllers.LihatKupon).Methods("GET")
+	router.HandleFunc("/LihatKupon/{id_pengguna}/{tipe_tiket}", controllers.LihatKupon).Methods("GET")
 	router.HandleFunc("/PakaiKupon/{id_voucher}", controllers.PakaiKupon).Methods("PUT")
 	router.HandleFunc("/LihatHistoryPesawat/{id_pengguna}", controllers.MelihatHistoryPesawat).Methods("GET")
 	router.HandleFunc("/LihatHistoryHotel/{id_pengguna}", controllers.MelihatHistoryHotel).Methods("GET")

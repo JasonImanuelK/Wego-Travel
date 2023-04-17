@@ -14,14 +14,9 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	errForm := r.ParseForm()
-	if errForm != nil {
-		SendErrorResponse(w, 400)
-		return
-	}
-
-	tipe_tiket := r.Form.Get("tipe_tiket")
-	id_pengguna := r.Form.Get("id_pengguna")
+	param := mux.Vars(r)
+	id_pengguna := param["id_pengguna"]
+	tipe_tiket := param["tipe_tiket"]
 
 	var rows *sql.Rows
 
