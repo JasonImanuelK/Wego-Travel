@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/Wego-Travel/API/model"
-	"github.com/golang-jwt/jwt/v4"
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 
@@ -52,30 +51,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tokenExpiryTime := time.Now().Add(60 * time.Minute)
-
-	// create claims with user data
-	claims := &Claims{
-		ID:       user.Id_pengguna,
-		Username: user.Nama,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: tokenExpiryTime.Unix(),
-		},
-	}
-
-	// encrypt claims to jwt token
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	signedToken, err := token.SignedString(jwtKey)
-	if err != nil {
-		return
-	}
+	GenerateToken(w, user.Id_pengguna, user.Nama)
 
 	// Response
 	var userResponse model.UserResponse
 	userResponse.Status = 200
 	userResponse.Message = "Request success"
 	userResponse.Data = user
-	userResponse.Token = signedToken
 
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(userResponse)
