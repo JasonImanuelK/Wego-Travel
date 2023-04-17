@@ -252,4 +252,23 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
+
+	if errQuery3 == nil {
+		var nilai float32
+		var id_pengguna int
+		row := db.QueryRow("SELECT a.id_pengguna, c.promo FROM `tiket_hotel` a JOIN kamar_hotel b ON a.id_tiket_hotel=b.id_tiket_hotel JOIN hotel c ON c.id_hotel=b.id_hotel WHERE a.id_tiket_hotel = ?;", id_tiket_hotel)
+		if err := row.Scan(&id_pengguna, &nilai); err != nil {
+			fmt.Println(err.Error())
+		}
+		nama_voucher := "cashback hotel"
+		tipe_tiket := "Hotel"
+		status_penggunaan := "Berlaku"
+		_, errVoucher := db.Exec("INSERT Into voucher (nama_voucher, nilai, tipe_tiket, status_penggunaan, id_pengguna) VALUES (?,?,?,?,?)", nama_voucher, nilai, tipe_tiket, status_penggunaan, id_pengguna)
+		if errVoucher == nil {
+			SendSuccessResponse(w)
+		} else {
+			log.Println("(ERROR)\t", errVoucher.Error())
+			SendErrorResponse(w, 400)
+		}
+	}
 }
