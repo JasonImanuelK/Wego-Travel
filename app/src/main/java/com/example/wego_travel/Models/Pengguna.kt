@@ -3,6 +3,8 @@ package com.example.wego_travel.Models
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 @Parcelize
@@ -15,10 +17,10 @@ data class Pengguna (
     var email: String,
     @SerializedName("password")
     var password:String,
-    @SerializedName("Jenis_kelamin")
-    var Jenis_kelamin:String,
-    @SerializedName("Tanggal_lahir")
-    var Tanggal_lahir:Date?,
+    @SerializedName("jenis_kelamin")
+    var jenis_kelamin:String,
+    @SerializedName("tanggal_lahir")
+    var tanggal_lahir:Date?,
     @SerializedName("nomor_telepon")
     var nomor_telepon:String,
     @SerializedName("alamat")

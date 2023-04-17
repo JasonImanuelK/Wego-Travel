@@ -31,7 +31,7 @@ class LihatKuponActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             setActionBarTitle(title)
-            getKupon()
+            getLihatKupon()
         }
     }
 
@@ -39,11 +39,12 @@ class LihatKuponActivity : AppCompatActivity() {
         supportActionBar?.title = title
     }
 
-    fun getKupon() {
+    fun getLihatKupon() {
         val listKupon: ArrayList<Kupon> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
         val uri = Uri.parse("http://192.168.100.31:8080/LihatKupon/"+pengguna.id_pengguna.toString()).buildUpon()
             .build()
+        Log.v("Id Pengguna : ", pengguna.id_pengguna.toString())
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),
             { response ->
