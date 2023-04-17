@@ -4,11 +4,9 @@ import (
 	// "crypto/md5"
 	// "encoding/hex"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"os"
-	"time"
 
 	"github.com/Wego-Travel/API/model"
 	"github.com/gorilla/mux"
@@ -99,14 +97,14 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	// encryptedPassword := hex.EncodeToString(hasher.Sum(nil))
 
 	//convert string time to date format
-	date, error := time.Parse("2006-01-02", tanggal_lahir)
-	if error != nil {
-		fmt.Println(error)
-		return
-	}
+	// date, error := time.Parse("2006-01-02", tanggal_lahir)
+	// if error != nil {
+	// 	fmt.Println(error)
+	// 	return
+	// }
 
 	// Query
-	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat) values (?,?,?,?,?,?,?)", nama, email, password, jenis_kelamin, date, nomor_telepon, alamat)
+	_, errQuery := db.Exec("INSERT INTO pengguna(nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat) values (?,?,?,?,?,?,?)", nama, email, password, jenis_kelamin, tanggal_lahir, nomor_telepon, alamat)
 
 	if errQuery == nil {
 		log.Println("(SUCCESS)\t", "Add new user request")
