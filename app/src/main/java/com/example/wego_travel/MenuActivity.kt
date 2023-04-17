@@ -28,7 +28,7 @@ class MenuActivity : AppCompatActivity(), View.OnClickListener {
                 startActivity(navAirplane)
             }
             R.id.img_hotel -> {
-                val navHotel = Intent(this, UpdateProfileActivity::class.java)
+                val navHotel = Intent(this, FilterHotelActivity::class.java)
                 startActivity(navHotel)
             }
         }

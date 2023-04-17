@@ -47,7 +47,7 @@
         android:layout_marginLeft="300dp"
         android:layout_marginTop="10dp">
         <Button
-            android:id="@+id/pesan"
+            android:id="@+id/pesan_pesawat"
             style="@style/Widget.AppCompat.Button.Colored"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
