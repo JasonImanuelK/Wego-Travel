@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Button
+
 import android.widget.EditText
 import android.widget.Toast
 import com.android.volley.Request
@@ -16,38 +17,42 @@ import com.example.wego_travel.Models.Pengguna
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
+import java.text.SimpleDateFormat
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class FilterPesawatActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.login_page)
+        setContentView(R.layout.activity_filter_pesawat)
 
-        val btnRegister: Button = findViewById(R.id.btn_nav_register)
-        btnRegister.setOnClickListener(this)
+        val btnCari: Button = findViewById(R.id.btn_cari_pesawat)
+        btnCari.setOnClickListener(this)
 
-        val btnLogin: Button = findViewById(R.id.btn_login)
-        btnLogin.setOnClickListener(this)
+        val btnKembali: Button = findViewById(R.id.btn_kembali_filter_pesawat)
+        btnKembali.setOnClickListener(this)
     }
 
     override fun onClick(v: View){
         when(v.id){
-            R.id.btn_nav_register ->{
-                val navRegister = Intent(this, RegisterActivity::class.java)
-                startActivity(navRegister)
+            R.id.btn_cari_pesawat ->{
+                val edtTempatKeberangkatan : EditText = findViewById(R.id.tempat_berangkat_filter)
+                val edtTujuanKeberangkatan : EditText = findViewById(R.id.tujuan_berangkat_filter)
+                val edtTanggalKeberangkatan : EditText = findViewById(R.id.tanggal_berangkat_filter)
+                val sdf = SimpleDateFormat("yyyy-MM-dd")
+
+                cariPesawat(edtTempatKeberangkatan.text.toString(), edtTujuanKeberangkatan.text.toString(), edtTanggalKeberangkatan.text.toString())
             }
-            R.id.btn_login -> {
-                val edtEmail : EditText = findViewById(R.id.email)
-                val edtPassword : EditText = findViewById(R.id.password)
-                checkLogin(edtEmail.text.toString(), edtPassword.text.toString())
+            R.id.btn_kembali_filter_pesawat -> {
+                val navKembali = Intent(this, MenuActivity::class.java)
+                startActivity(navKembali)
             }
         }
     }
 
-    fun checkLogin(email: String, password: String) {
-        val requestBody = "email="+email+"&password="+password
+    fun cariPesawat(tempat_berangkat: String, tujuan_berangkat: String, tanggal_berangkat:String) {
+        val requestBody = "tempat_berangkat="+tempat_berangkat+"&tujuan_berangkat="+tujuan_berangkat+"&tanggal_berangkat"+tanggal_berangkat
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Login").buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/Pesawat/"+tempat_berangkat+"/"+tujuan_berangkat+"/"+tanggal_berangkat).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.POST, uri.toString(),
