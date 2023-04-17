@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"database/sql"
 	"encoding/json"
 	"log"
 	"net/http"
@@ -13,15 +14,30 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	tipe_tiket := r.FormValue("tipe_tiket")
-	id_pengguna := r.FormValue("id_pengguna")
+	errForm := r.ParseForm()
+	if errForm != nil {
+		SendErrorResponse(w, 400)
+		return
+	}
 
-	rows, _ := db.Query("SELECT id_voucher, nama_voucher, nilai, status_penggunaan FROM Voucher WHERE id_pengguna = ? AND tipe_tiket = ?", id_pengguna, tipe_tiket)
+	tipe_tiket := r.Form.Get("tipe_tiket")
+	id_pengguna := r.Form.Get("id_pengguna")
+
+	var rows *sql.Rows
+
+	if tipe_tiket != "" {
+		url := "SELECT id_voucher, nama_voucher, nilai, tipe_tiket, status_penggunaan FROM Voucher WHERE id_pengguna = ?"
+		rows, _ = db.Query(url, id_pengguna)
+	} else {
+		url := "SELECT id_voucher, nama_voucher, nilai, tipe_tiket, status_penggunaan FROM Voucher WHERE id_pengguna = ? AND tipe_tiket = ?"
+		rows, _ = db.Query(url, id_pengguna, tipe_tiket)
+	}
+
 	var vouchersResponse model.VouchersResponse
 	var voucher model.Voucher
 
 	for rows.Next() {
-		if err := rows.Scan(&voucher.Id_voucher, &voucher.Nama_voucher, &voucher.Nilai, &voucher.Status_penggunaan); err != nil {
+		if err := rows.Scan(&voucher.Id_voucher, &voucher.Nama_voucher, &voucher.Tipe_tiket, &voucher.Nilai, &voucher.Status_penggunaan); err != nil {
 			log.Println(err)
 			SendErrorResponse(w, 500)
 			return

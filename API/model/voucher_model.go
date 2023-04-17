@@ -4,6 +4,7 @@ type Voucher struct {
 	Id_voucher        int     `json:"id_voucher"`
 	Nama_voucher      string  `json:"nama_voucher"`
 	Nilai             float32 `json:"nilai"`
+	Tipe_tiket        string  `json:"tipe_tiket"`
 	Status_penggunaan string  `json:"status_penggunaan"`
 }
 
