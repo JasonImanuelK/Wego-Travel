@@ -131,7 +131,7 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	hasher.Write([]byte(texthash))
 	sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
 
-	_, errQuery := db.Exec("INSERT INTO `tiket_pesawat` (`id_tiket_pesawat`, `id_pengguna`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `tanggal_lahir`, `email`, `nomor_telepon`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", sha, id_pengguna, nama_depan, nama_belakang, jenis_kelamin, c_tanggal_lahir, email, nomor_telepon)
+	_, errQuery := db.Exec("INSERT INTO `tiket_pesawat` (`id_tiket_pesawat`, `id_pengguna`, `id_voucher`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `tanggal_lahir`, `email`, `nomor_telepon`) VALUES (?, ?, NULLIF('', ?), ?, ?, ?, ?, ?, ?)", sha, id_pengguna, id_voucher, nama_depan, nama_belakang, jenis_kelamin, c_tanggal_lahir, email, nomor_telepon)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
@@ -145,7 +145,16 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	if errQuery2 == nil {
 		SendSuccessResponse(w)
 	} else {
-		log.Println("(ERROR)\t", errQuery.Error())
+		log.Println("(ERROR)\t", errQuery2.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery3 := db.Exec("UPDATE voucher SET status_penggunaan = 'Tidak Berlaku' WHERE id_voucher = ? AND tipe_tiket='Pesawat'", id_voucher)
+
+	if errQuery3 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
 }
@@ -161,12 +170,21 @@ func BatalPesanPesawat(w http.ResponseWriter, r *http.Request) {
 
 	id_tiket_pesawat := r.Form.Get("id_tiket_pesawat")
 
-	_, errQuery := db.Exec("UPDATE tiket_pesawat tp INNER JOIN kursi_pesawat kp ON tp.id_tiket_pesawat = kp.id_tiket_pesawat SET tp.status_pemesanan = 'Dikembalikan' AND kp.status_kamar = 'Kosong' WHERE th.id_tiket_pesawat = ?", id_tiket_pesawat)
+	_, errQuery := db.Exec("UPDATE tiket_pesawat SET status_pemesanan = 'Dikembalikan' WHERE id_tiket_pesawat = ?", id_tiket_pesawat)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
 	} else {
 		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery3 := db.Exec("UPDATE kursi_pesawat SET status_kursi = 'Kosong', id_tiket_pesawat = NULL WHERE id_tiket_pesawat = ?", id_tiket_pesawat)
+
+	if errQuery3 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
 }
@@ -182,12 +200,21 @@ func SelesaiPesanPesawat(w http.ResponseWriter, r *http.Request) {
 
 	id_tiket_pesawat := r.Form.Get("id_tiket_pesawat")
 
-	_, errQuery := db.Exec("UPDATE tiket_pesawat tp INNER JOIN kursi_pesawat kp ON tp.id_tiket_pesawat = kp.id_tiket_pesawat SET tp.status_pemesanan = 'Selesai' AND kp.status_kamar = 'Kosong' WHERE th.id_tiket_pesawat = ?", id_tiket_pesawat)
+	_, errQuery := db.Exec("UPDATE tiket_pesawat SET status_pemesanan = 'Selesai' WHERE id_tiket_pesawat = ?", id_tiket_pesawat)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
 	} else {
 		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery3 := db.Exec("UPDATE kursi_pesawat SET status_kursi = 'Kosong', id_tiket_pesawat = NULL WHERE id_tiket_pesawat = ?", id_tiket_pesawat)
+
+	if errQuery3 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
 }
