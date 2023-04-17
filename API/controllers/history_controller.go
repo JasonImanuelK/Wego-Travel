@@ -17,7 +17,7 @@ func MelihatHistoryPesawat(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
 	id_pengguna := param["id_pengguna"]
 
-	query := "SELECT id_tiket_pesawat, tanggal_pemesanan, status_pemesanan, id_voucher FROM tiket_pesawat WHERE id_pengguna = " + id_pengguna + " ORDER BY tanggal_pemesanan DESC ;"
+	query := "SELECT `pesawat`.`maskapai`, `tiket_pesawat`.`id_tiket_pesawat`, `tiket_pesawat`.`tanggal_pemesanan`, `tiket_pesawat`.`status_pemesanan`, `tiket_pesawat`.`id_voucher` FROM `tiket_pesawat` LEFT JOIN `kursi_pesawat` ON `kursi_pesawat`.`id_tiket_pesawat` = `tiket_pesawat`.`id_tiket_pesawat` LEFT JOIN `pesawat` ON `kursi_pesawat`.`id_pesawat` = `pesawat`.`id_pesawat` WHERE `tiket_pesawat`.`id_pengguna`= " + id_pengguna + " ORDER BY `tiket_pesawat`.`tanggal_pemesanan` DESC;"
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
@@ -29,7 +29,7 @@ func MelihatHistoryPesawat(w http.ResponseWriter, r *http.Request) {
 	var list_tiket_pesawat []model.HistoryPesawat
 
 	for rows.Next() {
-		if err := rows.Scan(&tiket_pesawat.Id_tiket_pesawat, &tiket_pesawat.Tanggal_pemesanan, &tiket_pesawat.Status_pemesanan, &tiket_pesawat.Id_voucher); err != nil {
+		if err := rows.Scan(&tiket_pesawat.Id_tiket_pesawat, &tiket_pesawat.Maskapai, &tiket_pesawat.Tanggal_pemesanan, &tiket_pesawat.Status_pemesanan, &tiket_pesawat.Id_voucher); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_tiket_pesawat = append(list_tiket_pesawat, tiket_pesawat)
@@ -57,7 +57,7 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
 	id_pengguna := param["id_pengguna"]
 
-	query := "SELECT id_tiket_hotel, tanggal_pemesanan, status_pemesanan, id_voucher FROM tiket_hotel WHERE id_pengguna = " + id_pengguna + " ORDER BY tanggal_pemesanan DESC ;"
+	query := "SELECT `hotel`.`nama_hotel`, `tiket_hotel`.`id_tiket_hotel`, `tiket_hotel`.`tanggal_pemesanan`, `tiket_hotel`.`status_pemesanan`, `tiket_hotel`.`id_voucher` FROM `hotel` LEFT JOIN `kamar_hotel` ON `kamar_hotel`.`id_hotel` = `hotel`.`id_hotel` LEFT JOIN `tiket_hotel` ON `kamar_hotel`.`id_tiket_hotel` = `tiket_hotel`.`id_tiket_hotel` WHERE `tiket_hotel`.`id_pengguna` = " + id_pengguna + " ORDER BY `tiket_hotel`.`tanggal_pemesanan` DESC;"
 	rows, err := db.Query(query)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
@@ -69,7 +69,7 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 	var list_tiket_hotel []model.HistoryHotel
 
 	for rows.Next() {
-		if err := rows.Scan(&tiket_hotel.Id_tiket_hotel, &tiket_hotel.Tanggal_pemesanan, &tiket_hotel.Status_pemesanan, &tiket_hotel.Id_voucher); err != nil {
+		if err := rows.Scan(&tiket_hotel.Id_tiket_hotel, &tiket_hotel.Nama_hotel, &tiket_hotel.Tanggal_pemesanan, &tiket_hotel.Status_pemesanan, &tiket_hotel.Id_voucher); err != nil {
 			fmt.Println(err.Error())
 		} else {
 			list_tiket_hotel = append(list_tiket_hotel, tiket_hotel)
