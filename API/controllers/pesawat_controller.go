@@ -2,12 +2,11 @@ package controllers
 
 import (
 	"fmt"
+	"hash/fnv"
 	"log"
 	"net/http"
 	"time"
 
-	"crypto/sha1"
-	"encoding/base64"
 	"encoding/json"
 
 	"github.com/Wego-Travel/API/model"
@@ -126,10 +125,11 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	texthash := nomor_kursi + id_pengguna + id_voucher + nama_depan + nama_belakang + jenis_kelamin + tanggal_lahir + email + nomor_telepon + time.Now().Format("yyyyMMddHHmmss")
-	hasher := sha1.New()
-	hasher.Write([]byte(texthash))
-	sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
+	texthash := nomor_kursi + id_pengguna + id_voucher + nama_depan + nama_belakang + jenis_kelamin + tanggal_lahir + email + nomor_telepon + time.Now().String()
+	log.Print(texthash)
+	h := fnv.New32a()
+	h.Write([]byte(texthash))
+	sha := h.Sum32()
 
 	_, errQuery := db.Exec("INSERT INTO `tiket_pesawat` (`id_tiket_pesawat`, `id_pengguna`, `id_voucher`, `nama_depan`, `nama_belakang`, `jenis_kelamin`, `tanggal_lahir`, `email`, `nomor_telepon`) VALUES (?, ?, NULLIF('', ?), ?, ?, ?, ?, ?, ?)", sha, id_pengguna, id_voucher, nama_depan, nama_belakang, jenis_kelamin, c_tanggal_lahir, email, nomor_telepon)
 
