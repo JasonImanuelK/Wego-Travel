@@ -148,7 +148,7 @@ func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {
 	hasher.Write([]byte(texthash))
 	sha := base64.URLEncoding.EncodeToString(hasher.Sum(nil))
 
-	_, errQuery := db.Exec("INSERT INTO `tiket_hotel` (`id_tiket_hotel`, `id_pengguna`, `nama_penginap`, `jenis_kelamin`, `tanggal_lahir`, `tanggal_inap`, `lama_inap`) VALUES (?, ?, ?, ?, ?, ?, ?)", sha, id_pengguna, nama_penginap, jenis_kelamin, c_tanggal_lahir, c_tanggal_inap, lama_inap)
+	_, errQuery := db.Exec("INSERT INTO `tiket_hotel` (`id_tiket_hotel`, `id_pengguna`, `id_voucher`, `nama_penginap`, `jenis_kelamin`, `tanggal_lahir`, `tanggal_inap`, `lama_inap`) VALUES (?, ?, NULLIF('', ?), ?, ?, ?, ?, ?)", sha, id_pengguna, id_voucher, nama_penginap, jenis_kelamin, c_tanggal_lahir, c_tanggal_inap, lama_inap)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
@@ -165,6 +165,15 @@ func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {
 		log.Println("(ERROR)\t", errQuery.Error())
 		SendErrorResponse(w, 400)
 	}
+
+	_, errQuery3 := db.Exec("UPDATE voucher SET status_penggunaan = 'Tidak Berlaku' WHERE id_voucher = ? AND tipe_tiket='Hotel'", id_voucher)
+
+	if errQuery3 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery3.Error())
+		SendErrorResponse(w, 400)
+	}
 }
 
 func BatalPesanHotel(w http.ResponseWriter, r *http.Request) {
@@ -178,12 +187,21 @@ func BatalPesanHotel(w http.ResponseWriter, r *http.Request) {
 
 	id_tiket_hotel := r.Form.Get("id_tiket_hotel")
 
-	_, errQuery := db.Exec("UPDATE tiket_hotel th INNER JOIN kamar_hotel kh ON th.id_tiket_hotel = kh.id_tiket_hotel SET th.status_pemesanan = 'Dikembalikan' AND kh.status_kamar = 'Kosong' WHERE th.id_tiket_hotel = ?", id_tiket_hotel)
+	_, errQuery := db.Exec("UPDATE tiket_hotel SET status_pemesanan = 'Dikembalikan' WHERE id_tiket_hotel = ?", id_tiket_hotel)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
 	} else {
 		log.Println("(ERROR)\t", errQuery.Error())
+		SendErrorResponse(w, 400)
+	}
+
+	_, errQuery3 := db.Exec("UPDATE kamar_hotel SET status_kamar = 'Kosong', id_tiket_hotel = NULL WHERE id_tiket_hotel = ?", id_tiket_hotel)
+
+	if errQuery3 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
 }
@@ -199,6 +217,8 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 
 	id_tiket_hotel := r.Form.Get("id_tiket_hotel")
 
+	log.Print(id_tiket_hotel)
+
 	_, errQuery := db.Exec("UPDATE tiket_hotel SET status_pemesanan = 'Selesai' WHERE id_tiket_hotel = ?", id_tiket_hotel)
 
 	if errQuery == nil {
@@ -208,19 +228,12 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 		SendErrorResponse(w, 400)
 	}
 
-	_, errQuery2 := db.Exec("UPDATE tiket_hotel SET status_pemesanan = 'Selesai' WHERE id_tiket_hotel = ?", id_tiket_hotel)
+	_, errQuery3 := db.Exec("UPDATE kamar_hotel SET status_kamar = 'Kosong', id_tiket_hotel = NULL WHERE id_tiket_hotel = ?", id_tiket_hotel)
 
-	if errQuery2 == nil {
+	if errQuery3 == nil {
 		SendSuccessResponse(w)
 	} else {
-		log.Println("(ERROR)\t", errQuery2.Error())
-		SendErrorResponse(w, 400)
-	}
-
-	if errQuery == nil {
-		SendSuccessResponse(w)
-	} else {
-		log.Println("(ERROR)\t", errQuery.Error())
+		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
 }

@@ -1,7 +1,7 @@
 package model
 
 type Pesawat struct {
-	Id_pesawat        int     `json:"id_pesawat"`
+	Id_pesawat        string  `json:"id_pesawat"`
 	Maskapai          string  `json:"maskapai"`
 	Tempat_berangkat  string  `json:"tempat_berangkat"`
 	Tujuan_berangkat  string  `json:"tujuan_berangkat"`

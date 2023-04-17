@@ -1,7 +1,7 @@
 package model
 
 type Hotel struct {
-	Id_hotel     int     `json:"id_hotel"`
+	Id_hotel     string  `json:"id_hotel"`
 	Nama_hotel   string  `json:"nama_hotel"`
 	Alamat_hotel string  `json:"alamat_hotel"`
 	Deskripsi    string  `json:"deskripsi"`
