@@ -18,9 +18,16 @@ func LihatListPesawat(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	tempat_berangkat := r.FormValue("tempat_berangkat")
-	tujuan_berangkat := r.FormValue("tujuan_berangkat")
-	tanggal_berangkat := r.FormValue("tanggal_berangkat")
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
+
+	param := mux.Vars(r)
+
+	tempat_berangkat := param["tempat_berangkat"]
+	tujuan_berangkat := param["tujuan_berangkat"]
+	tanggal_berangkat := param["tanggal_berangkat"]
 
 	query := "SELECT id_pesawat, maskapai, tempat_berangkat, tujuan_berangkat, tanggal_berangkat, jam_berangkat, promo FROM pesawat WHERE tempat_berangkat=? AND tujuan_berangkat=? AND tanggal_berangkat >= ?;"
 	rows, err := db.Query(query, tempat_berangkat, tujuan_berangkat, tanggal_berangkat)
@@ -98,15 +105,20 @@ func PesanKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	nomor_kursi := r.FormValue("nomor_kursi")
-	id_pengguna := r.FormValue("id_pengguna")
-	id_voucher := r.FormValue("id_voucher")
-	nama_depan := r.FormValue("nama_depan")
-	nama_belakang := r.FormValue("nama_belakang")
-	jenis_kelamin := r.FormValue("jenis_kelamin")
-	tanggal_lahir := r.FormValue("tanggal_lahir")
-	email := r.FormValue("email")
-	nomor_telepon := r.FormValue("nomor_telepon")
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
+
+	nomor_kursi := r.Form.Get("nomor_kursi")
+	id_pengguna := r.Form.Get("id_pengguna")
+	id_voucher := r.Form.Get("id_voucher")
+	nama_depan := r.Form.Get("nama_depan")
+	nama_belakang := r.Form.Get("nama_belakang")
+	jenis_kelamin := r.Form.Get("jenis_kelamin")
+	tanggal_lahir := r.Form.Get("tanggal_lahir")
+	email := r.Form.Get("email")
+	nomor_telepon := r.Form.Get("nomor_telepon")
 
 	c_tanggal_lahir, err := time.Parse("2006-01-02", tanggal_lahir)
 	if err != nil {
@@ -142,8 +154,12 @@ func BatalPesanPesawat(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	param := mux.Vars(r)
-	id_tiket_pesawat := param["id_tiket_pesawat"]
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
+
+	id_tiket_pesawat := r.Form.Get("id_tiket_pesawat")
 
 	_, errQuery := db.Exec("UPDATE tiket_pesawat tp INNER JOIN kursi_pesawat kp ON tp.id_tiket_pesawat = kp.id_tiket_pesawat SET tp.status_pemesanan = 'Dikembalikan' AND kp.status_kamar = 'Kosong' WHERE th.id_tiket_pesawat = ?", id_tiket_pesawat)
 
@@ -159,8 +175,12 @@ func SelesaiPesanPesawat(w http.ResponseWriter, r *http.Request) {
 	db := Connect()
 	defer db.Close()
 
-	param := mux.Vars(r)
-	id_tiket_pesawat := param["id_tiket_pesawat"]
+	err := r.ParseForm()
+	if err != nil {
+		return
+	}
+
+	id_tiket_pesawat := r.Form.Get("id_tiket_pesawat")
 
 	_, errQuery := db.Exec("UPDATE tiket_pesawat tp INNER JOIN kursi_pesawat kp ON tp.id_tiket_pesawat = kp.id_tiket_pesawat SET tp.status_pemesanan = 'Selesai' AND kp.status_kamar = 'Kosong' WHERE th.id_tiket_pesawat = ?", id_tiket_pesawat)
 
