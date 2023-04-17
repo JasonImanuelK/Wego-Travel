@@ -12,13 +12,10 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.wego_travel.Models.HistoryHotel
 import com.example.wego_travel.Models.Pengguna
 import com.google.gson.Gson
-import okhttp3.MultipartBody
 import org.json.JSONException
 import org.json.JSONObject
-import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {

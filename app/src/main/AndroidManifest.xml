@@ -20,6 +20,9 @@
             android:name=".IsiDataPesanHotelActivity"
             android:exported="false" />
         <activity
+            android:name=".FilterPesawatActivity"
+            android:exported="false" />
+        <activity
             android:name=".LihatKuponActivity"
             android:exported="false" />
         <activity

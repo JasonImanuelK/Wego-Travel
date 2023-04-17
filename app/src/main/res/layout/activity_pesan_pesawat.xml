@@ -10,7 +10,7 @@
     android:background="@drawable/backgroundapp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_pesan_hotel"
+        android:id="@+id/rv_pesan_pesawat"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:listitem="@layout/item_row_pesan_pesawat" />
