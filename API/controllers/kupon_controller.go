@@ -31,11 +31,10 @@ func LihatKupon(w http.ResponseWriter, r *http.Request) {
 			vouchersResponse.Data = append(vouchersResponse.Data, voucher)
 			vouchersResponse.Status = 200
 			vouchersResponse.Message = "Success"
-			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(vouchersResponse)
-			log.Println("(SUCCESS)\t", "Login request")
 		}
 	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(vouchersResponse)
 }
 
 func LihatKuponBerdasarkanTipeTiket(w http.ResponseWriter, r *http.Request) {
@@ -61,11 +60,10 @@ func LihatKuponBerdasarkanTipeTiket(w http.ResponseWriter, r *http.Request) {
 			vouchersResponse.Data = append(vouchersResponse.Data, voucher)
 			vouchersResponse.Status = 200
 			vouchersResponse.Message = "Success"
-			w.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(w).Encode(vouchersResponse)
-			log.Println("(SUCCESS)\t", "Login request")
 		}
 	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(vouchersResponse)
 }
 
 func PakaiKupon(w http.ResponseWriter, r *http.Request) {
