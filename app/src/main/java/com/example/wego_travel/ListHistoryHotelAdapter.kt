@@ -1,5 +1,6 @@
 package com.example.wego_travel
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,19 @@ class ListHistoryHotelAdapter (private val listHistoryHotel: ArrayList<HistoryHo
                 tvHistoryHotelName.text = historyHotel.nama_hotel
                 tvStatusPemesanan.text = historyHotel.status_pemesanan
                 tvHistoryHotelDescription.setText(sdf.format(historyHotel.tanggal_pemesanan))
+            }
+
+            itemView.setOnClickListener {
+                // Get the selected data from the clicked item
+                val selectedHistoryHotel = listHistoryHotel[adapterPosition]
+                val moveDataHistoryHotel= Intent(itemView.context, TampilanHistoryHotelActivity::class.java)
+
+                moveDataHistoryHotel.putExtra(TampilanHistoryHotelActivity.ID_TIKET_HOTEL, selectedHistoryHotel.id_tiket_hotel.toString())
+                moveDataHistoryHotel.putExtra(TampilanHistoryHotelActivity.NAMA_HOTEL, selectedHistoryHotel.nama_hotel)
+                moveDataHistoryHotel.putExtra(TampilanHistoryHotelActivity.TANGAL_PEMESANAN, selectedHistoryHotel.tanggal_pemesanan.toString())
+                moveDataHistoryHotel.putExtra(TampilanHistoryHotelActivity.STATUS_PEMESANAN, selectedHistoryHotel.status_pemesanan)
+                moveDataHistoryHotel.putExtra(TampilanHistoryHotelActivity.ID_VOUCHER, selectedHistoryHotel.id_voucher.toString())
+                itemView.context.startActivity(moveDataHistoryHotel)
             }
         }
     }
