@@ -80,7 +80,7 @@ func LihatListKamarHotel(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	id_hotel := vars["id_hotel"]
 
-	rows, err := db.Query("SELECT nomor_kamar, tipe_kamar, harga_kamar, status_kamar, id_hotel FROM kamar_hotel WHERE id_hotel=?;", id_hotel)
+	rows, err := db.Query("SELECT nomor_kamar, tipe_kamar, harga_kamar, status_kamar, id_hotel FROM kamar_hotel WHERE id_hotel=? AND status_kamar='Kosong';", id_hotel)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 500)
@@ -148,7 +148,7 @@ func PesanKamarHotel(w http.ResponseWriter, r *http.Request) {
 	h.Write([]byte(texthash))
 	sha := h.Sum32()
 
-	_, errQuery := db.Exec("INSERT INTO `tiket_hotel` (`id_tiket_hotel`, `id_pengguna`, `id_voucher`, `nama_penginap`, `jenis_kelamin`, `tanggal_lahir`, `tanggal_inap`, `lama_inap`) VALUES (?, ?, NULLIF('', ?), ?, ?, ?, ?, ?)", sha, id_pengguna, id_voucher, nama_penginap, jenis_kelamin, c_tanggal_lahir, c_tanggal_inap, lama_inap)
+	_, errQuery := db.Exec("INSERT INTO `tiket_hotel` (`id_tiket_hotel`, `id_pengguna`, `id_voucher`, `nama_penginap`, `jenis_kelamin`, `tanggal_lahir`, `tanggal_inap`, `lama_inap`) VALUES (?, ?, NULLIF(?, ''), ?, ?, ?, ?, ?)", sha, id_pengguna, id_voucher, nama_penginap, jenis_kelamin, c_tanggal_lahir, c_tanggal_inap, lama_inap)
 
 	if errQuery == nil {
 		SendSuccessResponse(w)
@@ -260,24 +260,5 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 	} else {
 		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
-	}
-
-	if errQuery3 == nil {
-		var nilai float32
-		var id_pengguna int
-		row := db.QueryRow("SELECT a.id_pengguna, c.promo FROM `tiket_hotel` a JOIN kamar_hotel b ON a.id_tiket_hotel=b.id_tiket_hotel JOIN hotel c ON c.id_hotel=b.id_hotel WHERE a.id_tiket_hotel = ?;", id_tiket_hotel)
-		if err := row.Scan(&id_pengguna, &nilai); err != nil {
-			fmt.Println(err.Error())
-		}
-		nama_voucher := "cashback hotel"
-		tipe_tiket := "Hotel"
-		status_penggunaan := "Berlaku"
-		_, errVoucher := db.Exec("INSERT Into voucher (nama_voucher, nilai, tipe_tiket, status_penggunaan, id_pengguna) VALUES (?,?,?,?,?)", nama_voucher, nilai, tipe_tiket, status_penggunaan, id_pengguna)
-		if errVoucher == nil {
-			SendSuccessResponse(w)
-		} else {
-			log.Println("(ERROR)\t", errVoucher.Error())
-			SendErrorResponse(w, 400)
-		}
 	}
 }
