@@ -15,7 +15,6 @@ import com.example.wego_travel.databinding.ItemRowHistoryPesawatBinding
 import java.text.SimpleDateFormat
 
 class ListHistoryPesawatAdapter (private val listHistoryPesawat: ArrayList<HistoryPesawat>) : RecyclerView.Adapter<ListHistoryPesawatAdapter.ListViewHolder>() {
-    private val checkedPosition = 0
     inner class ListViewHolder(private val binding: ItemRowHistoryPesawatBinding) : RecyclerView.ViewHolder(binding.root) {
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         fun bind(historyPesawat: HistoryPesawat){
