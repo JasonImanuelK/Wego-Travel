@@ -9,17 +9,6 @@ import android.view.View
 import android.widget.Button
 
 import android.widget.EditText
-import android.widget.Toast
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
-import com.example.wego_travel.Models.HistoryPesawat
-import com.example.wego_travel.Models.Pengguna
-import com.example.wego_travel.Models.Pesawat
-import com.google.gson.Gson
-import org.json.JSONException
-import org.json.JSONObject
-import java.text.SimpleDateFormat
 
 class FilterPesawatActivity : AppCompatActivity(), View.OnClickListener {
 
