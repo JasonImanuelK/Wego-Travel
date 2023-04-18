@@ -226,34 +226,4 @@ func SelesaiPesanPesawat(w http.ResponseWriter, r *http.Request) {
 		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
-<<<<<<< Updated upstream
-=======
-
-	// if errQuery3 == nil {
-	// 	var id_pengguna int
-	// 	var promo float64
-	// 	row := db.QueryRow("SELECT a.id_pengguna, c.promo FROM `tiket_pesawat` a JOIN kursi_pesawat b ON a.id_tiket_pesawat=b.id_tiket_pesawat JOIN pesawat c ON c.id_pesawat=b.id_pesawat WHERE a.id_tiket_pesawat = ?;", id_tiket_pesawat)
-	// 	if err := row.Scan(&id_pengguna, &promo); err != nil {
-	// 		fmt.Println(err.Error())
-	// 	}
-	// 	log.Println(id_pengguna)
-	// 	log.Println(promo)
-	// 	nama_voucher := "Diskon Pesawat " + strconv.FormatFloat(promo*100, 'f', 0, 64) + "%"
-	// 	tipe_tiket := "Pesawat"
-	// 	status_penggunaan := "Berlaku"
-
-	// 	log.Print(nama_voucher)
-	// 	log.Print(promo)
-	// 	log.Print(tipe_tiket)
-	// 	log.Print(status_penggunaan)
-
-	// 	_, errVoucher := db.Exec("INSERT INTO voucher (nama_voucher, nilai, tipe_tiket, status_penggunaan, id_pengguna) VALUES (?,?,?,?,?)", nama_voucher, promo, tipe_tiket, status_penggunaan, id_pengguna)
-	// 	if errVoucher == nil {
-	// 		SendSuccessResponse(w)
-	// 	} else {
-	// 		log.Println("(ERROR)\t", errVoucher.Error())
-	// 		SendErrorResponse(w, 400)
-	// 	}
-	// }
->>>>>>> Stashed changes
 }

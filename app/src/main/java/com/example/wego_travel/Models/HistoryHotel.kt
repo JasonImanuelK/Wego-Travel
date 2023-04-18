@@ -10,7 +10,7 @@ data class HistoryHotel (
     @SerializedName("nama_hotel")
     var nama_hotel: String,
     @SerializedName("id_tiket_hotel")
-    var id_tiket_hotel: Int,
+    var id_tiket_hotel: String,
     @SerializedName("tanggal_pemesanan")
     var tanggal_pemesanan:Date,
     @SerializedName("status_pemesanan")

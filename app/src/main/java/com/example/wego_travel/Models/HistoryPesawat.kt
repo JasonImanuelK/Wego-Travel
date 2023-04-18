@@ -10,7 +10,7 @@ data class HistoryPesawat (
     @SerializedName("maskapai")
     var maskapai: String,
     @SerializedName("id_tiket_pesawat")
-    var id_tiket_pesawat: Int,
+    var id_tiket_pesawat: String,
     @SerializedName("tanggal_pemesanan")
     var tanggal_pemesanan: Date,
     @SerializedName("status_pemesanan")

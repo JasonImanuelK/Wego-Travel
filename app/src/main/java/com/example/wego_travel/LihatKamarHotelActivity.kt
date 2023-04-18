@@ -3,51 +3,51 @@ package com.example.wego_travel
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.example.wego_travel.Models.Pesawat
-import com.example.wego_travel.databinding.ActivityHistoryPesawatBinding
-import com.example.wego_travel.databinding.ActivityPesanPesawatBinding
+import com.example.wego_travel.Models.KamarHotel
+import com.example.wego_travel.Models.KursiPesawat
+import com.example.wego_travel.Models.Pengguna
+import com.example.wego_travel.databinding.ActivityLihatKamarHotelBinding
+import com.example.wego_travel.databinding.ActivityLihatKursiPesawatBinding
 import com.google.gson.Gson
 import org.json.JSONException
 import org.json.JSONObject
 
-class PesanPesawatActivity : AppCompatActivity() {
-    private val list = ArrayList<Pesawat>()
-    private lateinit var binding: ActivityPesanPesawatBinding
-    private var title = "List Pesawat"
+class LihatKamarHotelActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityLihatKamarHotelBinding
+    private val list = ArrayList<KamarHotel>()
+    private var title = "Kamar Hotel"
+
     companion object {
-        const val ASAL = "asal"
-        const val TUJUAN = "tujuan"
-        const val TANGGAL = "tanggal"
+        const val ID_HOTEL = "id_hotel"
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPesanPesawatBinding.inflate(layoutInflater)
+        binding = ActivityLihatKamarHotelBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rvPesanPesawat.setHasFixedSize(true)
+        binding.rvLihatKamarHotel.setHasFixedSize(true)
 
         if (savedInstanceState == null) {
             setActionBarTitle(title)
-            val asal = intent.getStringExtra(ASAL)
-            val tujuan = intent.getStringExtra(TUJUAN)
-            val tanggal = intent.getStringExtra(TANGGAL)
-            cariPesawat(asal.toString() , tujuan.toString(), tanggal.toString())
+            getKursiPesawat()
         }
     }
 
     private fun setActionBarTitle(title: String?) {
         supportActionBar?.title = title
     }
-    fun cariPesawat(tempat_berangkat: String, tujuan_berangkat: String, tanggal_berangkat:String) {
-        val listPesawat: ArrayList<Pesawat> = ArrayList()
+
+    fun getKursiPesawat() {
+        val id_hotel = intent.getStringExtra(ID_HOTEL)
+        val listKamarHotel: ArrayList<KamarHotel> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Pesawat/"+tempat_berangkat+"/"+tujuan_berangkat+"/"+tanggal_berangkat).buildUpon()
+        val uri = Uri.parse("http://192.168.100.31:8080/Hotel/Kamar/"+id_hotel.toString()).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),
@@ -59,11 +59,10 @@ class PesanPesawatActivity : AppCompatActivity() {
                     for (i in 0 until jsonArray.length()) {
                         val raw = jsonArray.getJSONObject(i)
                         val gson = Gson()
-                        val a = gson.fromJson(raw.toString(), Pesawat::class.java)
-                        listPesawat.add(a)
-                        Log.v("Time : ", listPesawat.toString())
+                        val a = gson.fromJson(raw.toString(), KamarHotel::class.java)
+                        listKamarHotel.add(a)
                     }
-                    list.addAll(listPesawat)
+                    list.addAll(listKamarHotel)
                     showRecyclerList()
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -82,9 +81,10 @@ class PesanPesawatActivity : AppCompatActivity() {
         }
         requestQueue.add(stringRequest)
     }
+
     private fun showRecyclerList() {
-        binding.rvPesanPesawat.layoutManager = LinearLayoutManager(this)
-        val listPesawatAdapter = ListPesawatAdapter(list)
-        binding.rvPesanPesawat.adapter = listPesawatAdapter
+        binding.rvLihatKamarHotel.layoutManager = LinearLayoutManager(this)
+        val listLihatKamarAdapter = ListLihatKamarHotelAdapter(list)
+        binding.rvLihatKamarHotel.adapter = listLihatKamarAdapter
     }
 }

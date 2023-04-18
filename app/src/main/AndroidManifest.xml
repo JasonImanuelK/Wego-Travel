@@ -17,6 +17,21 @@
         android:theme="@style/Theme.WegoTravel"
         tools:targetApi="31">
         <activity
+            android:name=".LihatKamarHotelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".LihatKursiPesawatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TampilanHistoryHotelActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TampilanHistoryPesawatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FilterHotelActivity"
+            android:exported="false" />
+        <activity
             android:name=".IsiDataPesanHotelActivity"
             android:exported="false" />
         <activity

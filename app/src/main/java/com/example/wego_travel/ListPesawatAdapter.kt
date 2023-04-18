@@ -1,5 +1,7 @@
 package com.example.wego_travel
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,15 @@ class ListPesawatAdapter (private val listPesawat: ArrayList<Pesawat>) : Recycle
             with(binding){
                 tvPesanPesawatName.text = pesawat.maskapai
                 tvPesanPesawatDescription.setText(sdf.format(pesawat.tanggal_berangkat))
+            }
+            itemView.setOnClickListener {
+                // Get the selected data from the clicked item
+                val selectedPesawat = listPesawat[adapterPosition]
+                val moveDataPesawat= Intent(itemView.context, LihatKursiPesawatActivity::class.java)
+
+                moveDataPesawat.putExtra(LihatKursiPesawatActivity.ID_PESAWAT, selectedPesawat.id_pesawat.toString())
+                Log.v("ID PESAWAT ADAPTER : ", selectedPesawat.id_pesawat.toString())
+                itemView.context.startActivity(moveDataPesawat)
             }
         }
     }

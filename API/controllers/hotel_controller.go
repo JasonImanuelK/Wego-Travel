@@ -261,31 +261,4 @@ func SelesaiPesanHotel(w http.ResponseWriter, r *http.Request) {
 		log.Println("(ERROR)\t", errQuery3.Error())
 		SendErrorResponse(w, 400)
 	}
-<<<<<<< Updated upstream
-=======
-
-	// if errQuery3 == nil {
-	// 	var id_pengguna int
-	// 	var nilai float64
-	// 	row := db.QueryRow("SELECT a.id_pengguna, c.promo FROM `tiket_hotel` a JOIN kamar_hotel b ON a.id_tiket_hotel=b.id_tiket_hotel JOIN hotel c ON c.id_hotel=b.id_hotel WHERE a.id_tiket_hotel = ?;", id_tiket_hotel)
-	// 	if err := row.Scan(&id_pengguna, &nilai); err != nil {
-	// 		fmt.Println(err.Error())
-	// 	}
-	// 	nama_voucher := "Diskon Hotel " + strconv.FormatFloat(nilai*100, 'f', 0, 64) + "%"
-	// 	tipe_tiket := "Hotel"
-
-	// 	log.Print(nama_voucher)
-	// 	log.Print(nilai)
-	// 	log.Print(tipe_tiket)
-	// 	log.Print(id_pengguna)
-
-	// 	_, errVoucher := db.Exec("INSERT Into voucher (nama_voucher, nilai, tipe_tiket, id_pengguna) VALUES (?,?,?,?,?)", nama_voucher, nilai, tipe_tiket, id_pengguna)
-	// 	if errVoucher == nil {
-	// 		SendSuccessResponse(w)
-	// 	} else {
-	// 		log.Println("(ERROR)\t", errVoucher.Error())
-	// 		SendErrorResponse(w, 400)
-	// 	}
-	// }
->>>>>>> Stashed changes
 }
