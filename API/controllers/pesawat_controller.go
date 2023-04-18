@@ -179,14 +179,7 @@ func BatalPesanPesawat(w http.ResponseWriter, r *http.Request) {
 		SendErrorResponse(w, 400)
 	}
 
-	var id_voucher int
-	row := db.QueryRow("SELECT id_voucher FROM tiket_pesawat WHERE id_tiket_pesawat = ?", id_tiket_pesawat)
-
-	if err := row.Scan(&id_voucher); err != nil {
-		fmt.Println(err.Error())
-	}
-
-	_, errQuery2 := db.Exec("UPDATE voucher SET status_penggunaan = 'Berlaku' WHERE id_voucher = ?", id_voucher)
+	_, errQuery2 := db.Exec("UPDATE voucher a JOIN tiket_pesawat b ON a.id_voucher=b.id_voucher SET a.status_penggunaan = 'Berlaku' WHERE b.id_tiket_pesawat=?", id_tiket_pesawat)
 
 	if errQuery2 == nil {
 		SendSuccessResponse(w)
