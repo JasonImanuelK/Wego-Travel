@@ -20,8 +20,9 @@ func main() {
 	router.HandleFunc("/LupaPassword", controllers.Authenticate(controllers.LupaPassword, 1)).Methods("PUT")
 	router.HandleFunc("/UpdateProfil/{id_pengguna}", controllers.PerbaruiProfil).Methods("PUT")
 
-	router.HandleFunc("/LihatKupon/{id_pengguna}/{tipe_tiket}", controllers.LihatKupon).Methods("GET")
-  
+	router.HandleFunc("/LihatKupon/{id_pengguna}", controllers.LihatKupon).Methods("GET")
+	router.HandleFunc("/LihatKupon/{id_pengguna}/{tipe_tiket}", controllers.LihatKuponBerdasarkanTipeTiket).Methods("GET")
+
 	router.HandleFunc("/Pesawat/{tempat_berangkat}/{tujuan_berangkat}/{tanggal_berangkat}", controllers.LihatListPesawat).Methods("GET")
 	router.HandleFunc("/Hotel/{kota}/{tanggal_inap}/{akhir_inap}/{jumlah_penginap}", controllers.LihatListHotel).Methods("GET")
 

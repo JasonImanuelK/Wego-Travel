@@ -29,9 +29,16 @@ func MelihatHistoryPesawat(w http.ResponseWriter, r *http.Request) {
 	var list_tiket_pesawat []model.HistoryPesawat
 
 	for rows.Next() {
-		if err := rows.Scan(&tiket_pesawat.Maskapai, &tiket_pesawat.Id_tiket_pesawat, &tiket_pesawat.Tanggal_pemesanan, &tiket_pesawat.Status_pemesanan, &tiket_pesawat.Id_voucher); err != nil {
+		var idVoucher *int
+
+		if err := rows.Scan(&tiket_pesawat.Maskapai, &tiket_pesawat.Id_tiket_pesawat, &tiket_pesawat.Tanggal_pemesanan, &tiket_pesawat.Status_pemesanan, &idVoucher); err != nil {
 			fmt.Println(err.Error())
 		} else {
+			if idVoucher == nil {
+				tiket_pesawat.Id_voucher = 0
+			} else {
+				tiket_pesawat.Id_voucher = *idVoucher
+			}
 			list_tiket_pesawat = append(list_tiket_pesawat, tiket_pesawat)
 		}
 	}
@@ -69,11 +76,18 @@ func MelihatHistoryHotel(w http.ResponseWriter, r *http.Request) {
 	var list_tiket_hotel []model.HistoryHotel
 
 	for rows.Next() {
-		if err := rows.Scan(&tiket_hotel.Nama_hotel, &tiket_hotel.Id_tiket_hotel, &tiket_hotel.Tanggal_pemesanan, &tiket_hotel.Status_pemesanan, &tiket_hotel.Id_voucher); err != nil {
+		var idVoucher *int
+
+		if err := rows.Scan(&tiket_hotel.Nama_hotel, &tiket_hotel.Id_tiket_hotel, &tiket_hotel.Tanggal_pemesanan, &tiket_hotel.Status_pemesanan, &idVoucher); err != nil {
 			fmt.Println(err.Error())
 		} else {
-			list_tiket_hotel = append(list_tiket_hotel, tiket_hotel)
+			if idVoucher == nil {
+				tiket_hotel.Id_voucher = 0
+			} else {
+				tiket_hotel.Id_voucher = *idVoucher
+			}
 
+			list_tiket_hotel = append(list_tiket_hotel, tiket_hotel)
 		}
 	}
 
