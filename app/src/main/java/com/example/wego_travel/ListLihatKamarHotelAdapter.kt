@@ -1,5 +1,6 @@
 package com.example.wego_travel
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -18,18 +19,14 @@ class ListLihatKamarHotelAdapter (private val listKamarHotel: ArrayList<KamarHot
                 tvStatusKamar.text = kamarHotel.status_kamar
                 tvHargaKamar.text = kamarHotel.harga_kamar.toString()
             }
-//            itemView.setOnClickListener {
-//                // Get the selected data from the clicked item
-//                val selectedHistoryPesawat = listHistoryPesawat[adapterPosition]
-//                val moveDataHistoryPesawat = Intent(itemView.context, TampilanHistoryPesawatActivity::class.java)
-//
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.ID_TIKET_PESAWAT, selectedHistoryPesawat.id_tiket_pesawat.toString())
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.MASKAPAI, selectedHistoryPesawat.maskapai)
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.TANGAL_PEMESANAN, selectedHistoryPesawat.tanggal_pemesanan.toString())
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.STATUS_PEMESANAN, selectedHistoryPesawat.status_pemesanan)
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.ID_VOUCHER, selectedHistoryPesawat.id_voucher.toString())
-//                itemView.context.startActivity(moveDataHistoryPesawat)
-//            }
+            itemView.setOnClickListener {
+                // Get the selected data from the clicked item
+                val selectedNomorKamar = listKamarHotel[adapterPosition]
+                val moveNomorKamar = Intent(itemView.context, IsiDataPesanHotelActivity::class.java)
+
+                moveNomorKamar.putExtra(IsiDataPesanHotelActivity.NOMOR_KAMAR, selectedNomorKamar.nomor_kamar.toString())
+                itemView.context.startActivity(moveNomorKamar)
+            }
         }
     }
 
