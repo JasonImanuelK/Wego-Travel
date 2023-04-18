@@ -1,5 +1,7 @@
 package com.example.wego_travel
 
+import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,15 @@ class ListHotelAdapter (private val listHotel: ArrayList<Hotel>) : RecyclerView.
             with(binding){
                 tvPesanHotelName.text = hotel.nama_hotel
                 tvPesanHotelDescription.text = hotel.deskripsi
+            }
+            itemView.setOnClickListener {
+                // Get the selected data from the clicked item
+                val selectedHotel = listHotel[adapterPosition]
+                val moveDataHotel= Intent(itemView.context, LihatKamarHotelActivity::class.java)
+
+                moveDataHotel.putExtra(LihatKamarHotelActivity.ID_HOTEL, selectedHotel.id_hotel.toString())
+                Log.v("ID PESAWAT ADAPTER : ", selectedHotel.id_hotel.toString())
+                itemView.context.startActivity(moveDataHotel)
             }
         }
     }
