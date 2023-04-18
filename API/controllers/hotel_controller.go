@@ -196,6 +196,15 @@ func BatalPesanHotel(w http.ResponseWriter, r *http.Request) {
 		SendErrorResponse(w, 400)
 	}
 
+	_, errQuery2 := db.Exec("UPDATE voucher a JOIN tiket_hotel b ON a.id_voucher=b.id_voucher SET a.status_penggunaan = 'Berlaku' WHERE b.id_tiket_hotel=?", id_tiket_hotel)
+
+	if errQuery2 == nil {
+		SendSuccessResponse(w)
+	} else {
+		log.Println("(ERROR)\t", errQuery2.Error())
+		SendErrorResponse(w, 400)
+	}
+
 	_, errQuery3 := db.Exec("UPDATE kamar_hotel SET status_kamar = 'Kosong', id_tiket_hotel = NULL WHERE id_tiket_hotel = ?", id_tiket_hotel)
 
 	if errQuery3 == nil {
