@@ -19,18 +19,14 @@ class ListLihatKursiAdapter (private val listKursiPesawat: ArrayList<KursiPesawa
                 tvStatusKursi.text = kursiPesawat.status_kursi
                 tvHargaKursi.text = kursiPesawat.harga_kursi.toString()
             }
-//            itemView.setOnClickListener {
-//                // Get the selected data from the clicked item
-//                val selectedHistoryPesawat = listHistoryPesawat[adapterPosition]
-//                val moveDataHistoryPesawat = Intent(itemView.context, TampilanHistoryPesawatActivity::class.java)
-//
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.ID_TIKET_PESAWAT, selectedHistoryPesawat.id_tiket_pesawat.toString())
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.MASKAPAI, selectedHistoryPesawat.maskapai)
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.TANGAL_PEMESANAN, selectedHistoryPesawat.tanggal_pemesanan.toString())
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.STATUS_PEMESANAN, selectedHistoryPesawat.status_pemesanan)
-//                moveDataHistoryPesawat.putExtra(TampilanHistoryPesawatActivity.ID_VOUCHER, selectedHistoryPesawat.id_voucher.toString())
-//                itemView.context.startActivity(moveDataHistoryPesawat)
-//            }
+            itemView.setOnClickListener {
+                // Get the selected data from the clicked item
+                val selectedKursiPesawat = listKursiPesawat[adapterPosition]
+                val moveKursiPesawat= Intent(itemView.context, IsiDataPesanPesawatActivity::class.java)
+
+                moveKursiPesawat.putExtra(IsiDataPesanPesawatActivity.KURSI_PESAWAT, selectedKursiPesawat.nomor_kursi.toString())
+                itemView.context.startActivity(moveKursiPesawat)
+            }
         }
     }
 
