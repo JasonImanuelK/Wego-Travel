@@ -5,10 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wego_travel.Models.HistoryPesawat
 import com.example.wego_travel.databinding.ItemRowHistoryPesawatBinding

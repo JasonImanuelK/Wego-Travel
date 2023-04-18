@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         val btnLogin: Button = findViewById(R.id.btn_login)
         btnLogin.setOnClickListener(this)
     }
-
     override fun onClick(v: View){
         when(v.id){
             R.id.btn_nav_register ->{
