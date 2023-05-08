@@ -47,7 +47,8 @@ class LihatKamarHotelActivity : AppCompatActivity() {
         val id_hotel = intent.getStringExtra(ID_HOTEL)
         val listKamarHotel: ArrayList<KamarHotel> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Hotel/Kamar/"+id_hotel.toString()).buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/Hotel/Kamar/"+id_hotel.toString()
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),

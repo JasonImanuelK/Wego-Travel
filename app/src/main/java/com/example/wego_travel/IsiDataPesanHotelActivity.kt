@@ -55,7 +55,8 @@ class IsiDataPesanHotelActivity : AppCompatActivity(), View.OnClickListener {
         val requestBody = "nomor_kamar="+nomor_kamar.toString()+"&id_pengguna="+pengguna.id_pengguna.toString()+"&id_voucher="+id_voucher+"&nama_penginap="+nama_penginap+"&jenis_kelamin="+jenis_kelamin+"&tanggal_lahir="+tanggal_lahir+"&tanggal_inap="+tanggal_inap+"&lama_inap="+lama_inap
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Hotel/Kamar").buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/Hotel/Kamar"
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.POST, uri.toString(),

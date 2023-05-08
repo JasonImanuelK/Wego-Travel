@@ -31,4 +31,16 @@
     <string name="pembayaran_pesan_hotel">Pembayaran :</string>
     <string name="durasi_menginap">Durasi Menginap :</string>
     <string name="voucher_pesan_hotel">Voucher :</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="login_as_guest">Login as Guest</string>
+    <string name="ip_address">172.20.10.9</string>
+    <string-array name="kota">
+        <item>Bandung</item>
+        <item>Bali</item>
+        <item>Jakarta</item>
+        <item>Jambi</item>
+        <item>Sumba</item>
+        <item>Surabaya</item>
+    </string-array>
 </resources>

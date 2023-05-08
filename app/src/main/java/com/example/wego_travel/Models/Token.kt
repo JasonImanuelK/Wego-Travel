@@ -7,6 +7,20 @@ import java.util.*
 
 @Parcelize
 data class Token (
-    @SerializedName("token")
-    var token: String
-) : Parcelable
+    var token: String,
+    var check: Boolean
+) : Parcelable {
+    companion object {
+        @Volatile
+        private var instance: Token? = null
+
+        fun getInstance(): Token = instance ?: synchronized(this) {
+            instance ?: Token(
+                "", false
+            )
+        }
+        fun setInstance(token: Token) {
+            instance = token
+        }
+    }
+}

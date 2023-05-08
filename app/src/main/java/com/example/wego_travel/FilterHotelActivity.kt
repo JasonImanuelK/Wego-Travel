@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.EditText
 import java.text.SimpleDateFormat
@@ -18,6 +20,11 @@ class FilterHotelActivity : AppCompatActivity(), View.OnClickListener {
 
         val btnKembali: Button = findViewById(R.id.btn_kembali_filter_hotel)
         btnKembali.setOnClickListener(this)
+
+        val listKota = resources.getStringArray(R.array.kota)
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listKota)
+        val kota : AutoCompleteTextView = findViewById(R.id.kota_filter)
+        kota.setAdapter(arrayAdapter)
     }
 
     override fun onClick(v: View){

@@ -9,74 +9,73 @@
     tools:context=".MainActivity">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="250dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ImageView
-            android:src="@drawable/wegotravellogo"
-            android:layout_width="200dp"
-            android:layout_height="200dp">
-        </ImageView>
-        
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/wegotravellogo"></ImageView>
+
         <TextView
-            android:gravity="center"
             android:id="@+id/Slogan"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
             android:text="@string/Slogan"
-            android:textColor="@android:color/holo_blue_light"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:textColor="@android:color/holo_blue_light"></TextView>
 
         <TextView
-            android:gravity="left"
-            android:layout_marginTop="50dp"
             android:id="@+id/labelEmail"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:gravity="left"
             android:text="@string/labelEmail"
-            android:textColor="@android:color/holo_blue_light"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:textColor="@android:color/holo_blue_light"></TextView>
 
-        <EditText
+        <AutoCompleteTextView
             android:id="@+id/email"
-            android:layout_height="40dp"
             android:layout_width="200dp"
-            android:inputType="textEmailAddress">
-        </EditText>
+            android:layout_height="40dp"
+            android:hint="Email" />
 
         <TextView
-            android:gravity="left"
             android:id="@+id/labelPassword"
-            android:text="@string/labelPassword"
-            android:textColor="@android:color/holo_blue_light"
             android:layout_width="200dp"
-            android:layout_height="wrap_content">
-        </TextView>
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:text="@string/labelPassword"
+            android:textColor="@android:color/holo_blue_light"></TextView>
 
         <EditText
             android:id="@+id/password"
             android:layout_width="200dp"
             android:layout_height="40dp"
-            android:inputType="textPassword">
-        </EditText>
+            android:autofillHints="password"
+            android:hint="Password"
+            android:inputType="textPassword"></EditText>
 
         <TextView
-            android:gravity="center"
             android:id="@+id/labelLupaPassword"
-            android:text="@string/labelLupaPassword"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/holo_blue_dark">
-        </TextView>
+            android:gravity="center"
+            android:text="@string/labelLupaPassword"
+            android:textColor="@android:color/holo_blue_dark"></TextView>
 
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_alignParentBottom="true"
-        android:weightSum="2"
+        android:weightSum="3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -86,7 +85,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Register"
+                android:text="@string/register"
                 android:textSize="12sp" />
 
             <Button
@@ -95,9 +94,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Login"
+                android:text="@string/login"
                 android:textSize="12sp" />
 
+            <Button
+                android:id="@+id/btn_login_as_guest"
+                style="@style/Widget.AppCompat.Button.Colored"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/login_as_guest"
+                android:textSize="12sp" />
     </LinearLayout>
 
 </RelativeLayout>

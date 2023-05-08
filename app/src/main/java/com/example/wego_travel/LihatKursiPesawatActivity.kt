@@ -47,7 +47,8 @@ class LihatKursiPesawatActivity : AppCompatActivity() {
         val id_pesawat = intent.getStringExtra(ID_PESAWAT)
         val listKursiPesawat: ArrayList<KursiPesawat> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Pesawat/Kursi/"+id_pesawat.toString()).buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/Pesawat/Kursi/"+id_pesawat.toString()
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),

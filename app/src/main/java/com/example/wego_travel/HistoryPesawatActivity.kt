@@ -33,6 +33,11 @@ class HistoryPesawatActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        finish()
+    }
+
     private fun setActionBarTitle(title: String?) {
         supportActionBar?.title = title
     }
@@ -40,7 +45,8 @@ class HistoryPesawatActivity : AppCompatActivity() {
     fun getHistoryPesawat() {
         val listHistoryPesawat: ArrayList<HistoryPesawat> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/LihatHistoryPesawat/"+pengguna.id_pengguna.toString()).buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/LihatHistoryPesawat/"+pengguna.id_pengguna.toString()
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),

@@ -47,7 +47,8 @@ class PesanPesawatActivity : AppCompatActivity() {
     fun cariPesawat(tempat_berangkat: String, tujuan_berangkat: String, tanggal_berangkat:String) {
         val listPesawat: ArrayList<Pesawat> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Pesawat/"+tempat_berangkat+"/"+tujuan_berangkat+"/"+tanggal_berangkat).buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/Pesawat/"+tempat_berangkat+"/"+tujuan_berangkat+"/"+tanggal_berangkat
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),
