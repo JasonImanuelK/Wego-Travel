@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 
 import android.widget.EditText
@@ -21,6 +23,13 @@ class FilterPesawatActivity : AppCompatActivity(), View.OnClickListener {
 
         val btnKembali: Button = findViewById(R.id.btn_kembali_filter_pesawat)
         btnKembali.setOnClickListener(this)
+
+        val listKota = resources.getStringArray(R.array.kota)
+        val arrayAdapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, listKota)
+        val asal : AutoCompleteTextView = findViewById(R.id.tempat_berangkat_filter)
+        val tujuan : AutoCompleteTextView = findViewById(R.id.tujuan_berangkat_filter)
+        asal.setAdapter(arrayAdapter)
+        tujuan.setAdapter(arrayAdapter)
     }
 
     override fun onClick(v: View){

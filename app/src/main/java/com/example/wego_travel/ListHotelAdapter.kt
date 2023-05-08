@@ -6,25 +6,29 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.wego_travel.Models.Hotel
+import com.example.wego_travel.Models.Token
 import com.example.wego_travel.databinding.ItemRowPesanHotelBinding
 import java.text.SimpleDateFormat
 
 class ListHotelAdapter (private val listHotel: ArrayList<Hotel>) : RecyclerView.Adapter<ListHotelAdapter.ListViewHolder>() {
     inner class ListViewHolder(private val binding: ItemRowPesanHotelBinding) : RecyclerView.ViewHolder(binding.root) {
-        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        private val token = Token.getInstance()
         fun bind(hotel: Hotel){
             with(binding){
                 tvPesanHotelName.text = hotel.nama_hotel
                 tvPesanHotelDescription.text = hotel.deskripsi
             }
             itemView.setOnClickListener {
-                // Get the selected data from the clicked item
-                val selectedHotel = listHotel[adapterPosition]
-                val moveDataHotel= Intent(itemView.context, LihatKamarHotelActivity::class.java)
+                if (token.token==""){
 
-                moveDataHotel.putExtra(LihatKamarHotelActivity.ID_HOTEL, selectedHotel.id_hotel.toString())
-                Log.v("ID PESAWAT ADAPTER : ", selectedHotel.id_hotel.toString())
-                itemView.context.startActivity(moveDataHotel)
+                } else {
+                    // Get the selected data from the clicked item
+                    val selectedHotel = listHotel[adapterPosition]
+                    val moveDataHotel= Intent(itemView.context, LihatKamarHotelActivity::class.java)
+
+                    moveDataHotel.putExtra(LihatKamarHotelActivity.ID_HOTEL, selectedHotel.id_hotel.toString())
+                    itemView.context.startActivity(moveDataHotel)
+                }
             }
         }
     }

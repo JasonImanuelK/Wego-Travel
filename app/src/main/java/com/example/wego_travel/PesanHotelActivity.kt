@@ -49,7 +49,8 @@ class PesanHotelActivity : AppCompatActivity() {
     fun cariPesawat(kota: String, tanggal_inap: String, akhir_inap:String, jumlah_penginap:String) {
         val listHotel: ArrayList<Hotel> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/Hotel/"+kota+"/"+tanggal_inap+"/"+akhir_inap+"/"+jumlah_penginap).buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/Hotel/"+kota+"/"+tanggal_inap+"/"+akhir_inap+"/"+jumlah_penginap
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.GET, uri.toString(),

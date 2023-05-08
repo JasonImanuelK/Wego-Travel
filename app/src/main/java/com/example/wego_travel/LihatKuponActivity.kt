@@ -42,7 +42,8 @@ class LihatKuponActivity : AppCompatActivity() {
     fun getLihatKupon() {
         val listKupon: ArrayList<Kupon> = ArrayList()
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/LihatKupon/"+pengguna.id_pengguna.toString()).buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/LihatKupon/"+pengguna.id_pengguna.toString()
+        val uri = Uri.parse(url).buildUpon()
             .build()
         Log.v("Id Pengguna : ", pengguna.id_pengguna.toString())
         val stringRequest = object : StringRequest(

@@ -20,4 +20,14 @@
         android:id="@+id/lihat_kupon"
         android:title="Lihat Kupon"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/login_guest"
+        android:title="Login"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/logout"
+        android:title="Logout"
+        app:showAsAction="never" />
 </menu>

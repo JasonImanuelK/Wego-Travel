@@ -66,7 +66,8 @@ class TampilanHistoryHotelActivity : AppCompatActivity(), View.OnClickListener {
         var requestBody = "id_tiket_hotel="+id_tiket_hotel
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/BatalPesanHotel").buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/BatalPesanHotel"
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.PUT, uri.toString(),

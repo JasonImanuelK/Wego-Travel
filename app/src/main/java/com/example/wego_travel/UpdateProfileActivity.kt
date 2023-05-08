@@ -97,7 +97,8 @@ class UpdateProfileActivity : AppCompatActivity(), View.OnClickListener {
         requestBody.substring(1)
 
         val requestQueue = Volley.newRequestQueue(this)
-        val uri = Uri.parse("http://192.168.100.31:8080/UpdateProfil/"+pengguna.id_pengguna.toString()).buildUpon()
+        val url = "http://"+getString(R.string.ip_address)+":8080/UpdateProfil/"+pengguna.id_pengguna.toString()
+        val uri = Uri.parse(url).buildUpon()
             .build()
         val stringRequest = object : StringRequest(
             Request.Method.PUT, uri.toString(),
