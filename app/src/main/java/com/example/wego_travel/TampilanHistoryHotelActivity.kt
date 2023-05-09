@@ -1,5 +1,6 @@
 package com.example.wego_travel
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -57,7 +58,12 @@ class TampilanHistoryHotelActivity : AppCompatActivity(), View.OnClickListener {
                 refund(id_tiket_hotel.toString())
             }
             R.id.qr_hotel ->{
-                Toast.makeText(this, "INI QR!", Toast.LENGTH_LONG).show()
+                val id_tiket_hotel = intent.getStringExtra(ID_TIKET_HOTEL)
+                val navQRCode = Intent(this, QRCode::class.java)
+
+                navQRCode.putExtra(QRCode.ID, id_tiket_hotel.toString())
+
+                startActivity(navQRCode)
             }
         }
     }

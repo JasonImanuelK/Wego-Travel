@@ -45,14 +45,14 @@ class IsiDataPesanPesawatActivity : AppCompatActivity(), View.OnClickListener  {
                 val edtTanggalLahir : EditText = findViewById(R.id.tanggallahir_pesan_pesawat)
                 val edtEmail : EditText = findViewById(R.id.email_pesan_pesawat)
                 val edtNomorTelepon : EditText = findViewById(R.id.nomor_telepon_pesan_pesawat)
-                createPesanHotel(edtIdVoucher.text.toString(), edtNamaDepan.text.toString(), edtNamaBelakang.text.toString(), selectedRadioButtonText, edtTanggalLahir.text.toString(), edtEmail.text.toString(), edtNomorTelepon.text.toString())
+                createPesanPesawat(edtIdVoucher.text.toString(), edtNamaDepan.text.toString(), edtNamaBelakang.text.toString(), selectedRadioButtonText, edtTanggalLahir.text.toString(), edtEmail.text.toString(), edtNomorTelepon.text.toString())
             }
         }
     }
 
-    fun createPesanHotel(id_voucher: String, nama_depan: String, nama_belakang: String, jenis_kelamin: String, tanggal_lahir:String, email:String, nomor_telepon:String) {
+    fun createPesanPesawat(id_voucher: String, nama_depan: String, nama_belakang: String, jenis_kelamin: String, tanggal_lahir:String, email:String, nomor_telepon:String) {
         val nomor_kursi = intent.getStringExtra(KURSI_PESAWAT)
-        val requestBody = "nomor_kamar="+nomor_kursi.toString()+"&id_pengguna="+pengguna.id_pengguna.toString()+"&id_voucher="+id_voucher+"&nama_depan="+nama_depan+"&nama_belakang="+nama_belakang+"&jenis_kelamin="+jenis_kelamin+"&tanggal_lahir="+tanggal_lahir+"&email="+email+"&nomor_telepon="+nomor_telepon
+        val requestBody = "nomor_kursi="+nomor_kursi.toString()+"&id_pengguna="+pengguna.id_pengguna.toString()+"&id_voucher="+id_voucher+"&nama_depan="+nama_depan+"&nama_belakang="+nama_belakang+"&jenis_kelamin="+jenis_kelamin+"&tanggal_lahir="+tanggal_lahir+"&email="+email+"&nomor_telepon="+nomor_telepon
 
         val requestQueue = Volley.newRequestQueue(this)
         val url = "http://"+getString(R.string.ip_address)+":8080/Pesawat/Kursi"

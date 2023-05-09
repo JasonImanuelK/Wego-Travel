@@ -34,7 +34,7 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="login_as_guest">Login as Guest</string>
-    <string name="ip_address">172.20.10.9</string>
+    <string name="ip_address">192.168.100.31</string>
     <string-array name="kota">
         <item>Bandung</item>
         <item>Bali</item>

@@ -1,6 +1,8 @@
 package com.example.wego_travel
 
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,8 +12,15 @@ import android.widget.*
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.EncodeHintType
+import com.google.zxing.MultiFormatWriter
+import com.google.zxing.WriterException
+import com.google.zxing.common.BitMatrix
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel
 import org.json.JSONException
 import java.text.SimpleDateFormat
+import java.util.*
 
 class TampilanHistoryPesawatActivity : AppCompatActivity(), View.OnClickListener {
     companion object {
@@ -55,7 +64,12 @@ class TampilanHistoryPesawatActivity : AppCompatActivity(), View.OnClickListener
                 refund(id_tiket_pesawat.toString())
             }
             R.id.qr_pesawat ->{
-                Toast.makeText(this, "INI QR!", Toast.LENGTH_LONG).show()
+                val id_tiket_pesawat = intent.getStringExtra(ID_TIKET_PESAWAT)
+                val navQRCode = Intent(this, QRCode::class.java)
+
+                navQRCode.putExtra(QRCode.ID, id_tiket_pesawat.toString())
+
+                startActivity(navQRCode)
             }
         }
     }
