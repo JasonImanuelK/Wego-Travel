@@ -62,14 +62,6 @@
             android:hint="Password"
             android:inputType="textPassword"></EditText>
 
-        <TextView
-            android:id="@+id/labelLupaPassword"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/labelLupaPassword"
-            android:textColor="@android:color/holo_blue_dark"></TextView>
-
     </LinearLayout>
 
     <LinearLayout

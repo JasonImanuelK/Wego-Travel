@@ -68,7 +68,7 @@ func LihatListKursiPesawat(w http.ResponseWriter, r *http.Request) {
 	param := mux.Vars(r)
 	id_pesawat := param["id_pesawat"]
 
-	rows, err := db.Query("SELECT nomor_kursi, tipe_kursi, harga_kursi, status_kursi, id_pesawat FROM kursi_pesawat WHERE id_pesawat=?;", id_pesawat)
+	rows, err := db.Query("SELECT nomor_kursi, tipe_kursi, harga_kursi, status_kursi, id_pesawat FROM kursi_pesawat WHERE id_pesawat=? AND status_kursi='kosong';", id_pesawat)
 	if err != nil {
 		log.Println("(ERROR)\t", err)
 		SendErrorResponse(w, 500)
